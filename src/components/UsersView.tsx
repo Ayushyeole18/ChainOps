@@ -36,6 +36,7 @@ export const UsersView: React.FC<UsersViewProps> = ({
   const [username, setUsername] = useState('');
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('pass123');
   const [roleId, setRoleId] = useState(2);
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -50,6 +51,7 @@ export const UsersView: React.FC<UsersViewProps> = ({
     setUsername('');
     setFullName('');
     setEmail('');
+    setPassword('pass123');
     setRoleId(2);
     setErrorMsg('');
     setModalOpen(true);
@@ -68,7 +70,8 @@ export const UsersView: React.FC<UsersViewProps> = ({
       email: email.trim().toLowerCase(),
       roleId,
       role: roleObj?.displayName || 'Warehouse Manager',
-      status: 'ACTIVE'
+      status: 'ACTIVE',
+      password: password || `${username.trim().toLowerCase()}123`
     });
 
     if (!result.success) {
@@ -329,6 +332,19 @@ export const UsersView: React.FC<UsersViewProps> = ({
                   placeholder="e.g. jmitchell@supplychainx.com"
                   className="w-full px-3 py-2 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500"
                 />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Initial Password</label>
+                <input
+                  type="password"
+                  required
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="w-full px-3 py-2 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500"
+                />
+                <span className="text-[10px] text-slate-400 mt-1 block">Default: pass123 (hashed with BCrypt on server)</span>
               </div>
 
               <div>

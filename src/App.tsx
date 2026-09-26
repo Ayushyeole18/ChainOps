@@ -40,6 +40,7 @@ import { CategoriesView } from './components/CategoriesView';
 import { ReportsView } from './components/ReportsView';
 import { UsersView } from './components/UsersView';
 import { JavaExplorerView } from './components/JavaExplorerView';
+import { AuthView } from './components/AuthView';
 
 export default function App() {
   // Navigation
@@ -430,13 +431,17 @@ export default function App() {
   };
 
   // User CRUD
-  const handleCreateUser = (u: Omit<User, 'id'>) => {
+  const handleCreateUser = (u: Omit<User, 'id'>): { success: boolean; message: string; user?: User } => {
     if (users.some(user => user.username.toLowerCase() === u.username.toLowerCase())) {
       return { success: false, message: `Username '${u.username}' already in use.` };
     }
+    if (users.some(user => user.email.toLowerCase() === u.email.toLowerCase())) {
+      return { success: false, message: `Email '${u.email}' already registered in the system.` };
+    }
     const newId = Math.max(...users.map(usr => usr.id), 0) + 1;
-    setUsers(prev => [...prev, { ...u, id: newId }]);
-    return { success: true, message: 'User provisioned.' };
+    const newUser: User = { ...u, id: newId };
+    setUsers(prev => [...prev, newUser]);
+    return { success: true, message: 'User provisioned successfully.', user: newUser };
   };
 
   const handleToggleUserStatus = (id: number) => {
@@ -461,6 +466,18 @@ export default function App() {
       )
     );
   };
+
+  // If user is logged out, show enterprise Auth / Sign In / Sign Up view
+  if (!currentUser) {
+    return (
+      <AuthView
+        users={users}
+        roles={initialRoles}
+        onLogin={user => setCurrentUser(user)}
+        onSignUp={userData => handleCreateUser(userData)}
+      />
+    );
+  }
 
   // Page Title Mapping
   const tabTitles: Record<ActiveTab, string> = {
@@ -495,7 +512,9 @@ export default function App() {
         <TopBar
           title={tabTitles[activeTab]}
           currentUser={currentUser}
+          users={users}
           onSwitchUser={user => setCurrentUser(user)}
+          onLogout={() => setCurrentUser(null)}
           onDownloadZip={handleDownloadZip}
           onResetData={handleResetData}
         />

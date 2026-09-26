@@ -12,6 +12,7 @@ export interface User {
   roleId: number;
   role: string;
   status: 'ACTIVE' | 'INACTIVE';
+  password?: string;
 }
 
 export interface Category {
@@ -559,8 +560,8 @@ export const initialRoles: Role[] = [
 ];
 
 export const initialUsers: User[] = [
-  { id: 1, username: 'admin', email: 'admin@supplychainx.com', fullName: 'Alexander Vance', roleId: 1, role: 'Administrator', status: 'ACTIVE' },
-  { id: 2, username: 'warehouse', email: 'warehouse@supplychainx.com', fullName: 'Elena Rostova', roleId: 2, role: 'Warehouse Manager', status: 'ACTIVE' },
-  { id: 3, username: 'procure', email: 'procure@supplychainx.com', fullName: 'David Sterling', roleId: 3, role: 'Procurement Manager', status: 'ACTIVE' },
-  { id: 4, username: 'sales', email: 'sales@supplychainx.com', fullName: 'Sarah Chen', roleId: 4, role: 'Sales Manager', status: 'ACTIVE' },
+  { id: 1, username: 'admin', email: 'admin@supplychainx.com', fullName: 'Alexander Vance', roleId: 1, role: 'Administrator', status: 'ACTIVE', password: 'admin123' },
+  { id: 2, username: 'warehouse', email: 'warehouse@supplychainx.com', fullName: 'Elena Rostova', roleId: 2, role: 'Warehouse Manager', status: 'ACTIVE', password: 'warehouse123' },
+  { id: 3, username: 'procure', email: 'procure@supplychainx.com', fullName: 'David Sterling', roleId: 3, role: 'Procurement Manager', status: 'ACTIVE', password: 'procure123' },
+  { id: 4, username: 'sales', email: 'sales@supplychainx.com', fullName: 'Sarah Chen', roleId: 4, role: 'Sales Manager', status: 'ACTIVE', password: 'sales123' },
 ];

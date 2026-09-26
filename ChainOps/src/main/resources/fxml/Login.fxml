@@ -37,6 +37,10 @@
             </VBox>
 
             <Button text="Sign In to ChainOps" onAction="#handleLogin" styleClass="btn-primary" prefHeight="42" maxWidth="Infinity" style="-fx-font-size: 13px;"/>
+
+            <HBox alignment="CENTER">
+                <Hyperlink text="New to ChainOps? Create an account (Sign Up)" onAction="#handleShowSignUp" style="-fx-font-size: 12px; -fx-text-fill: #2563EB; -fx-underline: false;"/>
+            </HBox>
         </VBox>
 
         <!-- Quick Demo Credentials for Evaluation & Testing -->

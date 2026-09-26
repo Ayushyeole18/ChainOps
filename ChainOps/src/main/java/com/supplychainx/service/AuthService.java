@@ -50,6 +50,39 @@ public class AuthService {
         return user;
     }
 
+    public User registerUser(String fullName, String username, String email, String rawPassword, int roleId) {
+        if (fullName == null || fullName.trim().isEmpty()) {
+            throw new AuthenticationException("Full name is required.");
+        }
+        if (username == null || username.trim().isEmpty()) {
+            throw new AuthenticationException("Username is required.");
+        }
+        if (email == null || !email.contains("@")) {
+            throw new AuthenticationException("A valid corporate email is required.");
+        }
+        if (rawPassword == null || rawPassword.trim().length() < 6) {
+            throw new AuthenticationException("Password must be at least 6 characters.");
+        }
+
+        String trimmedUser = username.trim().toLowerCase();
+        String trimmedEmail = email.trim().toLowerCase();
+
+        if (userDao.findByUsername(trimmedUser).isPresent()) {
+            throw new AuthenticationException("Username '" + trimmedUser + "' is already taken.");
+        }
+        if (userDao.findByEmail(trimmedEmail).isPresent()) {
+            throw new AuthenticationException("Email '" + trimmedEmail + "' is already registered.");
+        }
+
+        String passwordHash = PasswordUtil.hashPassword(rawPassword);
+        User newUser = new User(0, trimmedUser, trimmedEmail, passwordHash, fullName.trim(), roleId, "ACTIVE");
+        int generatedId = userDao.insert(newUser);
+        newUser.setUserId(generatedId);
+
+        currentUser = newUser;
+        return newUser;
+    }
+
     public static User getCurrentUser() {
         return currentUser;
     }

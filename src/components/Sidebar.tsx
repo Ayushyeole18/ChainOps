@@ -146,7 +146,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         <button
           onClick={onLogout}
-          className="w-full flex items-center justify-center gap-2 text-xs py-1.5 rounded-md bg-slate-800/80 hover:bg-red-950/60 text-slate-300 hover:text-red-300 border border-slate-700/50 hover:border-red-700/50 transition-colors"
+          className="w-full flex items-center justify-center gap-2 text-xs py-1.5 rounded-md bg-slate-800/80 hover:bg-red-950/60 text-slate-300 hover:text-red-300 border border-slate-700/50 hover:border-red-700/50 transition-colors cursor-pointer"
         >
           <LogOut className="w-3.5 h-3.5" />
           <span>Sign Out</span>
