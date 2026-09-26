@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.supplychainx.controller.SalesOrderController"
+            fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+
+    <VBox spacing="20">
+        <padding>
+            <Insets top="20" right="24" bottom="24" left="24"/>
+        </padding>
+
+        <!-- Header -->
+        <HBox alignment="CENTER_LEFT" spacing="12">
+            <VBox spacing="2" HBox.hgrow="ALWAYS">
+                <Label text="Sales Orders &amp; Outbound Fulfillment" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #0F172A;"/>
+                <Label text="Process customer orders, verify inventory availability, reserve stock, and dispatch shipments" style="-fx-font-size: 12px; -fx-text-fill: #64748B;"/>
+            </VBox>
+        </HBox>
+
+        <!-- Toolbar -->
+        <HBox alignment="CENTER_LEFT" spacing="12" styleClass="content-panel" style="-fx-padding: 12 16 12 16;">
+            <TextField fx:id="searchField" promptText="🔍 Search SO number, customer name, email..." prefWidth="300" styleClass="text-field"/>
+            <ComboBox fx:id="statusFilterCombo" prefWidth="150" styleClass="combo-box"/>
+            <Button text="Filter" onAction="#handleSearchAndFilter" styleClass="btn-primary"/>
+            <Button text="Reset" onAction="#handleResetFilter" styleClass="btn-secondary"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="📦 Confirm Order &amp; Reserve Stock" onAction="#handleConfirmSelected" styleClass="btn-success"/>
+            <Button text="✖ Cancel Order" onAction="#handleCancelSelected" styleClass="btn-danger"/>
+        </HBox>
+
+        <!-- Sales Orders Table -->
+        <VBox styleClass="content-panel" spacing="12">
+            <Label text="Sales Orders Ledger" styleClass="content-header-title"/>
+            <TableView fx:id="soTable" prefHeight="260">
+                <columns>
+                    <TableColumn fx:id="colSoNumber" text="SO #" prefWidth="120"/>
+                    <TableColumn fx:id="colCustomer" text="Customer Client" prefWidth="190"/>
+                    <TableColumn fx:id="colWarehouse" text="Fulfillment Hub" prefWidth="140"/>
+                    <TableColumn fx:id="colOrderDate" text="Order Date" prefWidth="105"/>
+                    <TableColumn fx:id="colTotal" text="Total Amount ($)" prefWidth="120"/>
+                    <TableColumn fx:id="colStatus" text="Order Status" prefWidth="110"/>
+                    <TableColumn fx:id="colCreatedBy" text="Agent" prefWidth="130"/>
+                </columns>
+            </TableView>
+        </VBox>
+
+        <!-- New Sales Order Entry Form -->
+        <VBox styleClass="content-panel" spacing="16">
+            <Label text="Create New Sales Order" styleClass="content-header-title"/>
+            <Label text="Customer details, shipping destination, and product selection" styleClass="content-header-desc"/>
+
+            <GridPane hgap="16" vgap="12">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="33"/>
+                    <ColumnConstraints percentWidth="33"/>
+                    <ColumnConstraints percentWidth="34"/>
+                </columnConstraints>
+
+                <VBox GridPane.columnIndex="0" spacing="4">
+                    <Label text="Customer / Client Name" styleClass="form-label"/>
+                    <TextField fx:id="customerNameField" promptText="Acme Industrial Corp" styleClass="text-field"/>
+                </VBox>
+
+                <VBox GridPane.columnIndex="1" spacing="4">
+                    <Label text="Customer Email Address" styleClass="form-label"/>
+                    <TextField fx:id="customerEmailField" promptText="buyer@acmeind.com" styleClass="text-field"/>
+                </VBox>
+
+                <VBox GridPane.columnIndex="2" spacing="4">
+                    <Label text="Phone Number" styleClass="form-label"/>
+                    <TextField fx:id="customerPhoneField" promptText="+1-555-0199" styleClass="text-field"/>
+                </VBox>
+
+                <VBox GridPane.columnIndex="0" GridPane.columnSpan="2" spacing="4">
+                    <Label text="Delivery Shipping Address" styleClass="form-label"/>
+                    <TextArea fx:id="shippingAddressArea" promptText="Enter full commercial shipping address..." prefRowCount="2" styleClass="text-field"/>
+                </VBox>
+
+                <VBox GridPane.columnIndex="2" spacing="4">
+                    <Label text="Fulfillment Warehouse" styleClass="form-label"/>
+                    <ComboBox fx:id="warehouseCombo" maxWidth="Infinity" styleClass="combo-box"/>
+                </VBox>
+            </GridPane>
+
+            <!-- Line Items Builder -->
+            <VBox spacing="10" style="-fx-background-color: #F8FAFC; -fx-padding: 16; -fx-background-radius: 8; -fx-border-color: #E2E8F0; -fx-border-radius: 8;">
+                <Label text="Order Line Items" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #1E293B;"/>
+
+                <HBox spacing="12" alignment="CENTER_LEFT">
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="Product Item" styleClass="form-label"/>
+                        <ComboBox fx:id="productCombo" maxWidth="Infinity" styleClass="combo-box"/>
+                    </VBox>
+                    <VBox spacing="4" prefWidth="120">
+                        <Label text="Order Qty" styleClass="form-label"/>
+                        <TextField fx:id="quantityField" promptText="e.g. 10" styleClass="text-field"/>
+                    </VBox>
+                    <VBox spacing="4" prefWidth="130">
+                        <Label text="Unit Price ($)" styleClass="form-label"/>
+                        <TextField fx:id="unitPriceField" promptText="0.00" styleClass="text-field"/>
+                    </VBox>
+                    <VBox spacing="4" alignment="BOTTOM_LEFT">
+                        <Label text=" "/>
+                        <Button text="➕ Add to Order" onAction="#handleAddItem" styleClass="btn-secondary"/>
+                    </VBox>
+                </HBox>
+
+                <TableView fx:id="itemsTable" prefHeight="160">
+                    <columns>
+                        <TableColumn fx:id="colItemSku" text="SKU" prefWidth="110"/>
+                        <TableColumn fx:id="colItemName" text="Product Name" prefWidth="250"/>
+                        <TableColumn fx:id="colItemQty" text="Quantity" prefWidth="80"/>
+                        <TableColumn fx:id="colItemPrice" text="Unit Price ($)" prefWidth="110"/>
+                        <TableColumn fx:id="colItemSubtotal" text="Subtotal ($)" prefWidth="120"/>
+                    </columns>
+                </TableView>
+
+                <HBox alignment="CENTER_RIGHT" spacing="16">
+                    <Button text="Remove Selected Line" onAction="#handleRemoveItem" styleClass="btn-secondary" style="-fx-font-size: 11px;"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label text="Total Order Value:" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #475569;"/>
+                    <Label fx:id="totalAmountLabel" text="$0.00" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #0F172A;"/>
+                </HBox>
+            </VBox>
+
+            <VBox spacing="4">
+                <Label text="Order Notes / Delivery Terms" styleClass="form-label"/>
+                <TextArea fx:id="notesArea" promptText="Add invoice notes or special packaging requests..." prefRowCount="2" styleClass="text-field"/>
+            </VBox>
+
+            <HBox alignment="CENTER_RIGHT">
+                <Button text="Submit Sales Order" onAction="#handleCreateOrder" styleClass="btn-primary" style="-fx-padding: 10 24 10 24; -fx-font-size: 13px;"/>
+            </HBox>
+        </VBox>
+    </VBox>
+</ScrollPane>

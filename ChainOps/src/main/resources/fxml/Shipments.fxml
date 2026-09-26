@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.supplychainx.controller.ShipmentController"
+            fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+
+    <VBox spacing="20">
+        <padding>
+            <Insets top="20" right="24" bottom="24" left="24"/>
+        </padding>
+
+        <!-- Header -->
+        <HBox alignment="CENTER_LEFT" spacing="12">
+            <VBox spacing="2" HBox.hgrow="ALWAYS">
+                <Label text="Logistics &amp; Shipment Tracking" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #0F172A;"/>
+                <Label text="Dispatch freight carriers, track automated waybills, and update delivery progression" style="-fx-font-size: 12px; -fx-text-fill: #64748B;"/>
+            </VBox>
+        </HBox>
+
+        <!-- Filter Toolbar -->
+        <HBox alignment="CENTER_LEFT" spacing="12" styleClass="content-panel" style="-fx-padding: 12 16 12 16;">
+            <TextField fx:id="searchField" promptText="🔍 Search tracking #, SO#, customer, carrier..." prefWidth="320" styleClass="text-field"/>
+            <ComboBox fx:id="statusFilterCombo" prefWidth="160" styleClass="combo-box"/>
+            <Button text="Filter" onAction="#handleSearchAndFilter" styleClass="btn-primary"/>
+            <Button text="Reset" onAction="#handleResetFilter" styleClass="btn-secondary"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label text="Update Status:" style="-fx-font-weight: bold; -fx-text-fill: #334155;"/>
+            <ComboBox fx:id="updateStatusCombo" prefWidth="160" styleClass="combo-box"/>
+            <TextField fx:id="updateNotesField" promptText="Checkpoint notes..." prefWidth="160" styleClass="text-field"/>
+            <Button text="Apply Status" onAction="#handleUpdateStatus" styleClass="btn-secondary" style="-fx-text-fill: #2563EB; -fx-border-color: #93C5FD;"/>
+        </HBox>
+
+        <!-- Shipments Table -->
+        <VBox styleClass="content-panel" spacing="12">
+            <Label text="Active &amp; Historical Shipments" styleClass="content-header-title"/>
+            <TableView fx:id="shipmentTable" prefHeight="280">
+                <columns>
+                    <TableColumn fx:id="colTracking" text="Tracking Number" prefWidth="160"/>
+                    <TableColumn fx:id="colSoNumber" text="Sales Order #" prefWidth="110"/>
+                    <TableColumn fx:id="colCustomer" text="Customer" prefWidth="180"/>
+                    <TableColumn fx:id="colCarrier" text="Carrier Logistics" prefWidth="150"/>
+                    <TableColumn fx:id="colShipDate" text="Ship Date" prefWidth="105"/>
+                    <TableColumn fx:id="colExpDelivery" text="Expected Delivery" prefWidth="115"/>
+                    <TableColumn fx:id="colActDelivery" text="Actual Delivery" prefWidth="110"/>
+                    <TableColumn fx:id="colStatus" text="Status" prefWidth="120"/>
+                </columns>
+            </TableView>
+        </VBox>
+
+        <!-- New Shipment Dispatch Form -->
+        <VBox styleClass="content-panel" spacing="16">
+            <Label text="Dispatch New Shipment" styleClass="content-header-title"/>
+            <Label text="Assign a freight carrier and generate tracking credentials for confirmed sales orders" styleClass="content-header-desc"/>
+
+            <GridPane hgap="16" vgap="12">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="33"/>
+                    <ColumnConstraints percentWidth="33"/>
+                    <ColumnConstraints percentWidth="34"/>
+                </columnConstraints>
+
+                <VBox GridPane.columnIndex="0" spacing="4">
+                    <Label text="Select Confirmed Sales Order" styleClass="form-label"/>
+                    <ComboBox fx:id="soCombo" maxWidth="Infinity" styleClass="combo-box"/>
+                </VBox>
+
+                <VBox GridPane.columnIndex="1" spacing="4">
+                    <Label text="Freight Carrier" styleClass="form-label"/>
+                    <ComboBox fx:id="carrierCombo" maxWidth="Infinity" styleClass="combo-box"/>
+                </VBox>
+
+                <VBox GridPane.columnIndex="2" spacing="4">
+                    <Label text="Auto-Generated Tracking Number" styleClass="form-label"/>
+                    <TextField fx:id="trackingField" styleClass="text-field"/>
+                </VBox>
+
+                <VBox GridPane.columnIndex="0" spacing="4">
+                    <Label text="Shipment Date" styleClass="form-label"/>
+                    <DatePicker fx:id="shipDatePicker" maxWidth="Infinity" styleClass="date-picker"/>
+                </VBox>
+
+                <VBox GridPane.columnIndex="1" spacing="4">
+                    <Label text="Expected Delivery Date" styleClass="form-label"/>
+                    <DatePicker fx:id="expectedDeliveryPicker" maxWidth="Infinity" styleClass="date-picker"/>
+                </VBox>
+
+                <VBox GridPane.columnIndex="2" spacing="4">
+                    <Label text="Shipping Notes / Dock Manifest" styleClass="form-label"/>
+                    <TextArea fx:id="shippingNotesArea" promptText="Handling precautions, pallet count, etc." prefRowCount="2" styleClass="text-field"/>
+                </VBox>
+            </GridPane>
+
+            <HBox alignment="CENTER_RIGHT">
+                <Button text="Dispatch &amp; Create Shipment" onAction="#handleCreateShipment" styleClass="btn-primary" style="-fx-padding: 10 24 10 24; -fx-font-size: 13px;"/>
+            </HBox>
+        </VBox>
+    </VBox>
+</ScrollPane>

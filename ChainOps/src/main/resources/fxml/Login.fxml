@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.supplychainx.controller.LoginController"
+           styleClass="login-root">
+
+    <VBox alignment="CENTER" spacing="20" maxWidth="440" maxHeight="560" styleClass="login-card">
+        <padding>
+            <Insets top="32" right="32" bottom="32" left="32"/>
+        </padding>
+
+        <!-- Brand Header -->
+        <VBox alignment="CENTER" spacing="6">
+            <Label text="ChainOps" styleClass="brand-title" style="-fx-text-fill: #0F172A; -fx-font-size: 28px;"/>
+            <Label text="Enterprise Supply Chain &amp; Logistics OS" styleClass="brand-subtitle" style="-fx-text-fill: #64748B; -fx-font-size: 13px;"/>
+        </VBox>
+
+        <!-- Error Notification Banner -->
+        <Label fx:id="errorLabel" text="Error message" wrapText="true"
+               style="-fx-text-fill: #DC2626; -fx-background-color: #FEE2E2; -fx-padding: 8 12 8 12; -fx-background-radius: 6; -fx-font-weight: bold; -fx-max-width: Infinity; -fx-alignment: CENTER;"
+               visible="false" managed="${errorLabel.visible}"/>
+
+        <!-- Login Form Fields -->
+        <VBox spacing="14" alignment="CENTER_LEFT" maxWidth="Infinity">
+            <VBox spacing="4">
+                <Label text="Username or Corporate Email" styleClass="form-label"/>
+                <TextField fx:id="usernameField" promptText="admin@supplychainx.com" styleClass="text-field" prefHeight="40"/>
+            </VBox>
+
+            <VBox spacing="4">
+                <Label text="Password" styleClass="form-label"/>
+                <PasswordField fx:id="passwordField" promptText="••••••••" styleClass="text-field" prefHeight="40"/>
+            </VBox>
+
+            <Button text="Sign In to ChainOps" onAction="#handleLogin" styleClass="btn-primary" prefHeight="42" maxWidth="Infinity" style="-fx-font-size: 13px;"/>
+        </VBox>
+
+        <!-- Quick Demo Credentials for Evaluation & Testing -->
+        <VBox spacing="8" alignment="CENTER" style="-fx-background-color: #F8FAFC; -fx-padding: 12; -fx-background-radius: 8; -fx-border-color: #E2E8F0; -fx-border-radius: 8;">
+            <Label text="Quick Demo Credentials" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #64748B;"/>
+            <HBox spacing="8" alignment="CENTER">
+                <Button text="Admin" onAction="#fillAdminCredentials" styleClass="btn-secondary" style="-fx-font-size: 11px; -fx-padding: 4 10 4 10;"/>
+                <Button text="Warehouse" onAction="#fillWarehouseCredentials" styleClass="btn-secondary" style="-fx-font-size: 11px; -fx-padding: 4 10 4 10;"/>
+                <Button text="Sales" onAction="#fillSalesCredentials" styleClass="btn-secondary" style="-fx-font-size: 11px; -fx-padding: 4 10 4 10;"/>
+            </HBox>
+        </VBox>
+    </VBox>
+</StackPane>

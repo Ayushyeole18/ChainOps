@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.supplychainx.controller.UserController"
+            fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+
+    <VBox spacing="20">
+        <padding>
+            <Insets top="20" right="24" bottom="24" left="24"/>
+        </padding>
+
+        <!-- Header -->
+        <HBox alignment="CENTER_LEFT" spacing="12">
+            <VBox spacing="2" HBox.hgrow="ALWAYS">
+                <Label text="User Accounts &amp; Role-Based Access Control" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #0F172A;"/>
+                <Label text="Manage operator credentials, assign security roles, and enforce BCrypt salted cryptographic protection" style="-fx-font-size: 12px; -fx-text-fill: #64748B;"/>
+            </VBox>
+            <Button text="➕ New User" onAction="#handleNewUser" styleClass="btn-secondary" style="-fx-text-fill: #2563EB; -fx-border-color: #93C5FD;"/>
+            <Button text="🗑️ Delete User" onAction="#handleDeleteUser" styleClass="btn-danger"/>
+        </HBox>
+
+        <GridPane hgap="16">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="62"/>
+                <ColumnConstraints percentWidth="38"/>
+            </columnConstraints>
+
+            <!-- Table -->
+            <VBox GridPane.columnIndex="0" styleClass="content-panel" spacing="12">
+                <Label text="System Users Directory" styleClass="content-header-title"/>
+                <TableView fx:id="userTable" prefHeight="450" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colId" text="ID" prefWidth="45"/>
+                        <TableColumn fx:id="colUsername" text="Username" prefWidth="120"/>
+                        <TableColumn fx:id="colFullName" text="Full Name" prefWidth="160"/>
+                        <TableColumn fx:id="colEmail" text="Email Address" prefWidth="180"/>
+                        <TableColumn fx:id="colRole" text="System Role" prefWidth="140"/>
+                        <TableColumn fx:id="colStatus" text="Status" prefWidth="90"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <!-- Form -->
+            <VBox GridPane.columnIndex="1" styleClass="content-panel" spacing="12">
+                <Label fx:id="formTitleLabel" text="Register New User" styleClass="content-header-title"/>
+                <Label text="Role assignment and credential encryption" styleClass="content-header-desc"/>
+
+                <VBox spacing="10">
+                    <VBox spacing="4">
+                        <Label text="Username" styleClass="form-label"/>
+                        <TextField fx:id="usernameField" promptText="e.g. jdoe" styleClass="text-field"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="Full Name" styleClass="form-label"/>
+                        <TextField fx:id="fullNameField" promptText="John Doe" styleClass="text-field"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="Corporate Email" styleClass="form-label"/>
+                        <TextField fx:id="emailField" promptText="jdoe@supplychainx.com" styleClass="text-field"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="Password (BCrypt Hashed)" styleClass="form-label"/>
+                        <PasswordField fx:id="passwordField" promptText="Enter secure password..." styleClass="text-field"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="Access Role (RBAC)" styleClass="form-label"/>
+                        <ComboBox fx:id="roleCombo" maxWidth="Infinity" styleClass="combo-box"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="Account Status" styleClass="form-label"/>
+                        <ComboBox fx:id="statusCombo" maxWidth="Infinity" styleClass="combo-box"/>
+                    </VBox>
+
+                    <Button text="💾 Save User Account" onAction="#handleSaveUser" maxWidth="Infinity" styleClass="btn-primary" style="-fx-padding: 10; -fx-font-size: 13px;"/>
+                </VBox>
+            </VBox>
+        </GridPane>
+    </VBox>
+</ScrollPane>

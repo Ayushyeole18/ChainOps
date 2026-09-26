@@ -1,0 +1,411 @@
+/* =====================================================================
+   ChainOps Design System - Enterprise JavaFX Stylesheet
+   Color Palette: Slate / Deep Navy / Corporate Blue / Neutral Light
+   ===================================================================== */
+
+/* Base Root Styling */
+.root {
+    -fx-font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+    -fx-font-size: 13px;
+    -fx-background-color: #F8FAFC;
+    -fx-text-fill: #0F172A;
+}
+
+/* ---------------------------------------------------------------------
+   Header / Top Navigation Bar
+   --------------------------------------------------------------------- */
+.top-bar {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E2E8F0;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 12 24 12 24;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.top-bar-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0F172A;
+}
+
+.top-bar-badge {
+    -fx-background-color: #EFF6FF;
+    -fx-text-fill: #2563EB;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 3 8 3 8;
+    -fx-background-radius: 6;
+}
+
+.user-profile-badge {
+    -fx-background-color: #F1F5F9;
+    -fx-padding: 6 12 6 12;
+    -fx-background-radius: 20;
+    -fx-alignment: CENTER;
+}
+
+.user-profile-text {
+    -fx-font-weight: bold;
+    -fx-text-fill: #1E293B;
+    -fx-font-size: 12px;
+}
+
+.user-role-text {
+    -fx-text-fill: #64748B;
+    -fx-font-size: 11px;
+}
+
+/* ---------------------------------------------------------------------
+   Sidebar Navigation
+   --------------------------------------------------------------------- */
+.sidebar {
+    -fx-background-color: #0F172A;
+    -fx-min-width: 250px;
+    -fx-max-width: 250px;
+    -fx-padding: 20 12 20 12;
+}
+
+.sidebar-brand-box {
+    -fx-padding: 0 8 20 8;
+    -fx-border-color: #1E293B;
+    -fx-border-width: 0 0 1 0;
+}
+
+.brand-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+}
+
+.brand-subtitle {
+    -fx-font-size: 11px;
+    -fx-text-fill: #94A3B8;
+}
+
+.sidebar-section-header {
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #64748B;
+    -fx-padding: 14 8 4 8;
+    -fx-letter-spacing: 0.5px;
+}
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #94A3B8;
+    -fx-font-size: 13px;
+    -fx-font-weight: 500;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 10 14 10 14;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+
+.nav-button:hover {
+    -fx-background-color: #1E293B;
+    -fx-text-fill: #FFFFFF;
+}
+
+.nav-button-active {
+    -fx-background-color: #2563EB;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+}
+
+.nav-button-active:hover {
+    -fx-background-color: #1D4ED8;
+}
+
+.logout-button {
+    -fx-background-color: #1E293B;
+    -fx-text-fill: #F87171;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-padding: 8 14 8 14;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+
+.logout-button:hover {
+    -fx-background-color: #7F1D1D;
+    -fx-text-fill: #FEF2F2;
+}
+
+/* ---------------------------------------------------------------------
+   Dashboard Stat Cards
+   --------------------------------------------------------------------- */
+.stat-card {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 10;
+    -fx-padding: 18 20 18 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.04), 8, 0, 0, 2);
+    -fx-border-color: #E2E8F0;
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+}
+
+.stat-card-title {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #64748B;
+}
+
+.stat-card-value {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0F172A;
+    -fx-padding: 4 0 4 0;
+}
+
+.stat-card-sub {
+    -fx-font-size: 11px;
+    -fx-text-fill: #10B981;
+}
+
+.stat-card-sub-warning {
+    -fx-font-size: 11px;
+    -fx-text-fill: #F59E0B;
+}
+
+.stat-card-sub-danger {
+    -fx-font-size: 11px;
+    -fx-text-fill: #EF4444;
+}
+
+/* ---------------------------------------------------------------------
+   Panels & Containers
+   --------------------------------------------------------------------- */
+.content-panel {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 10;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.04), 8, 0, 0, 2);
+    -fx-border-color: #E2E8F0;
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+}
+
+.content-header-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0F172A;
+}
+
+.content-header-desc {
+    -fx-font-size: 12px;
+    -fx-text-fill: #64748B;
+}
+
+/* ---------------------------------------------------------------------
+   Table View Customization
+   --------------------------------------------------------------------- */
+.table-view {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E2E8F0;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #F8FAFC;
+    -fx-border-color: #E2E8F0;
+    -fx-border-width: 0 0 1 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-font-weight: bold;
+    -fx-text-fill: #475569;
+    -fx-font-size: 12px;
+    -fx-padding: 10 12 10 12;
+}
+
+.table-row-cell {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #F1F5F9;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 2 0 2 0;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #FAFAFA;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #F0FDF4;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #EFF6FF;
+}
+
+.table-cell {
+    -fx-text-fill: #1E293B;
+    -fx-font-size: 12px;
+    -fx-padding: 8 12 8 12;
+    -fx-alignment: CENTER_LEFT;
+}
+
+/* ---------------------------------------------------------------------
+   Buttons
+   --------------------------------------------------------------------- */
+.btn-primary {
+    -fx-background-color: #2563EB;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-padding: 8 16 8 16;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #1D4ED8;
+}
+
+.btn-secondary {
+    -fx-background-color: #F1F5F9;
+    -fx-text-fill: #334155;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-padding: 8 16 8 16;
+    -fx-background-radius: 6;
+    -fx-border-color: #CBD5E1;
+    -fx-border-radius: 6;
+    -fx-cursor: hand;
+}
+
+.btn-secondary:hover {
+    -fx-background-color: #E2E8F0;
+}
+
+.btn-success {
+    -fx-background-color: #10B981;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-padding: 8 16 8 16;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+
+.btn-success:hover {
+    -fx-background-color: #059669;
+}
+
+.btn-danger {
+    -fx-background-color: #EF4444;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-padding: 8 16 8 16;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+
+.btn-danger:hover {
+    -fx-background-color: #DC2626;
+}
+
+/* ---------------------------------------------------------------------
+   Form Controls
+   --------------------------------------------------------------------- */
+.text-field, .combo-box, .date-picker {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #CBD5E1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 8 10 8 10;
+    -fx-font-size: 12px;
+    -fx-text-fill: #0F172A;
+}
+
+.text-field:focused, .combo-box:focused, .date-picker:focused {
+    -fx-border-color: #2563EB;
+    -fx-effect: dropshadow(gaussian, rgba(37, 99, 235, 0.15), 4, 0, 0, 0);
+}
+
+.form-label {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #334155;
+    -fx-padding: 4 0 2 0;
+}
+
+.form-help-text {
+    -fx-font-size: 11px;
+    -fx-text-fill: #64748B;
+}
+
+/* ---------------------------------------------------------------------
+   Status Badges
+   --------------------------------------------------------------------- */
+.badge-success {
+    -fx-background-color: #D1FAE5;
+    -fx-text-fill: #065F46;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 3 8 3 8;
+    -fx-background-radius: 12;
+}
+
+.badge-warning {
+    -fx-background-color: #FEF3C7;
+    -fx-text-fill: #92400E;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 3 8 3 8;
+    -fx-background-radius: 12;
+}
+
+.badge-danger {
+    -fx-background-color: #FEE2E2;
+    -fx-text-fill: #991B1B;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 3 8 3 8;
+    -fx-background-radius: 12;
+}
+
+.badge-info {
+    -fx-background-color: #E0E7FF;
+    -fx-text-fill: #3730A3;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 3 8 3 8;
+    -fx-background-radius: 12;
+}
+
+.badge-neutral {
+    -fx-background-color: #F1F5F9;
+    -fx-text-fill: #475569;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 3 8 3 8;
+    -fx-background-radius: 12;
+}
+
+/* ---------------------------------------------------------------------
+   Login View
+   --------------------------------------------------------------------- */
+.login-root {
+    -fx-background-color: #0F172A;
+}
+
+.login-card {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 12;
+    -fx-padding: 36 32 36 32;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 20, 0, 0, 8);
+    -fx-min-width: 420px;
+    -fx-max-width: 420px;
+}
+
+.login-brand-icon {
+    -fx-background-color: #2563EB;
+    -fx-background-radius: 10;
+    -fx-padding: 12;
+    -fx-alignment: CENTER;
+}

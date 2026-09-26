@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.supplychainx.controller.ProductController"
+            fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+
+    <VBox spacing="20">
+        <padding>
+            <Insets top="20" right="24" bottom="24" left="24"/>
+        </padding>
+
+        <!-- Header -->
+        <HBox alignment="CENTER_LEFT" spacing="12">
+            <VBox spacing="2" HBox.hgrow="ALWAYS">
+                <Label text="Product Master Data Catalog" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #0F172A;"/>
+                <Label text="Manage stock keeping units (SKUs), reorder threshold baselines, pricing, and category classifications" style="-fx-font-size: 12px; -fx-text-fill: #64748B;"/>
+            </VBox>
+        </HBox>
+
+        <!-- Filter Toolbar -->
+        <HBox alignment="CENTER_LEFT" spacing="12" styleClass="content-panel" style="-fx-padding: 12 16 12 16;">
+            <TextField fx:id="searchField" promptText="🔍 Search product name, SKU, description..." prefWidth="280" styleClass="text-field"/>
+            <ComboBox fx:id="filterCategoryCombo" prefWidth="180" styleClass="combo-box"/>
+            <ComboBox fx:id="filterStatusCombo" prefWidth="140" styleClass="combo-box"/>
+            <Button text="Filter" onAction="#handleSearchAndFilter" styleClass="btn-primary"/>
+            <Button text="Reset" onAction="#handleResetFilter" styleClass="btn-secondary"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="➕ New Product" onAction="#handleNewProduct" styleClass="btn-secondary" style="-fx-text-fill: #2563EB; -fx-border-color: #93C5FD;"/>
+            <Button text="🗑️ Delete" onAction="#handleDeleteProduct" styleClass="btn-danger"/>
+        </HBox>
+
+        <!-- Main Layout: Table on Left, Edit Form on Right -->
+        <GridPane hgap="16">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="64"/>
+                <ColumnConstraints percentWidth="36"/>
+            </columnConstraints>
+
+            <!-- Table -->
+            <VBox GridPane.columnIndex="0" styleClass="content-panel" spacing="12">
+                <Label text="Product Inventory Roster" styleClass="content-header-title"/>
+                <TableView fx:id="productTable" prefHeight="480" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
+                        <TableColumn fx:id="colSku" text="SKU" prefWidth="110"/>
+                        <TableColumn fx:id="colName" text="Product Name" prefWidth="180"/>
+                        <TableColumn fx:id="colCategory" text="Category" prefWidth="120"/>
+                        <TableColumn fx:id="colPrice" text="Unit Price ($)" prefWidth="95"/>
+                        <TableColumn fx:id="colReorder" text="Reorder" prefWidth="70"/>
+                        <TableColumn fx:id="colStock" text="Total Stock" prefWidth="80"/>
+                        <TableColumn fx:id="colStatus" text="Status" prefWidth="95"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <!-- Form -->
+            <VBox GridPane.columnIndex="1" styleClass="content-panel" spacing="12">
+                <Label fx:id="formTitleLabel" text="Add New Product" styleClass="content-header-title"/>
+                <Label text="Define product identifiers and inventory controls" styleClass="content-header-desc"/>
+
+                <VBox spacing="10">
+                    <VBox spacing="4">
+                        <Label text="SKU (Unique Identifier)" styleClass="form-label"/>
+                        <TextField fx:id="skuField" promptText="e.g. SKU-IND-100" styleClass="text-field"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="Product Name" styleClass="form-label"/>
+                        <TextField fx:id="nameField" promptText="Industrial Aluminum Rod 50mm" styleClass="text-field"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="Category" styleClass="form-label"/>
+                        <ComboBox fx:id="categoryCombo" maxWidth="Infinity" styleClass="combo-box"/>
+                    </VBox>
+
+                    <HBox spacing="10">
+                        <VBox spacing="4" HBox.hgrow="ALWAYS">
+                            <Label text="Unit Price ($)" styleClass="form-label"/>
+                            <TextField fx:id="priceField" promptText="0.00" styleClass="text-field"/>
+                        </VBox>
+                        <VBox spacing="4" HBox.hgrow="ALWAYS">
+                            <Label text="Reorder Level" styleClass="form-label"/>
+                            <TextField fx:id="reorderField" promptText="10" styleClass="text-field"/>
+                        </VBox>
+                    </HBox>
+
+                    <HBox spacing="10">
+                        <VBox spacing="4" HBox.hgrow="ALWAYS">
+                            <Label text="Unit of Measure" styleClass="form-label"/>
+                            <TextField fx:id="unitField" promptText="Units / Bags / Rolls" styleClass="text-field"/>
+                        </VBox>
+                        <VBox spacing="4" HBox.hgrow="ALWAYS">
+                            <Label text="Status" styleClass="form-label"/>
+                            <ComboBox fx:id="statusCombo" maxWidth="Infinity" styleClass="combo-box"/>
+                        </VBox>
+                    </HBox>
+
+                    <VBox spacing="4">
+                        <Label text="Detailed Description" styleClass="form-label"/>
+                        <TextArea fx:id="descriptionArea" promptText="Enter technical specs, material grades, or handling instructions..." prefRowCount="3" styleClass="text-field"/>
+                    </VBox>
+
+                    <Button fx:id="saveButton" text="💾 Save Product Record" onAction="#handleSaveProduct" maxWidth="Infinity" styleClass="btn-primary" style="-fx-padding: 10; -fx-font-size: 13px;"/>
+                </VBox>
+            </VBox>
+        </GridPane>
+    </VBox>
+</ScrollPane>

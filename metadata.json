@@ -1,0 +1,6 @@
+{
+  "name": "ChainOps – Supply Chain Management System",
+  "description": "Enterprise-grade Supply Chain Management System built in Java 17+, JavaFX, Maven, MySQL & JDBC with complete inventory, procurement, sales, shipments, stock transfers, and analytics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

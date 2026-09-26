@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.supplychainx.controller.ReportController"
+            fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+
+    <VBox spacing="20">
+        <padding>
+            <Insets top="20" right="24" bottom="24" left="24"/>
+        </padding>
+
+        <!-- Header -->
+        <HBox alignment="CENTER_LEFT" spacing="12">
+            <VBox spacing="2" HBox.hgrow="ALWAYS">
+                <Label text="Supply Chain Intelligence &amp; Custom Reports" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #0F172A;"/>
+                <Label text="Generate aggregated operational audits, analyze turnover velocity, and export compliance data directly to CSV spreadsheets" style="-fx-font-size: 12px; -fx-text-fill: #64748B;"/>
+            </VBox>
+        </HBox>
+
+        <!-- Configuration Bar -->
+        <HBox alignment="CENTER_LEFT" spacing="14" styleClass="content-panel" style="-fx-padding: 16;">
+            <VBox spacing="4" prefWidth="300">
+                <Label text="Select Analytics Report Type" styleClass="form-label"/>
+                <ComboBox fx:id="reportTypeCombo" maxWidth="Infinity" styleClass="combo-box"/>
+            </VBox>
+
+            <VBox spacing="4" prefWidth="150">
+                <Label text="From Date" styleClass="form-label"/>
+                <DatePicker fx:id="fromDatePicker" maxWidth="Infinity" styleClass="date-picker"/>
+            </VBox>
+
+            <VBox spacing="4" prefWidth="150">
+                <Label text="To Date" styleClass="form-label"/>
+                <DatePicker fx:id="toDatePicker" maxWidth="Infinity" styleClass="date-picker"/>
+            </VBox>
+
+            <VBox spacing="4" prefWidth="200">
+                <Label text="Facility Filter" styleClass="form-label"/>
+                <ComboBox fx:id="warehouseFilterCombo" maxWidth="Infinity" styleClass="combo-box"/>
+            </VBox>
+
+            <VBox spacing="4" alignment="BOTTOM_LEFT">
+                <Label text=" "/>
+                <Button text="⚡ Generate Live Report" onAction="#handleGenerateReport" styleClass="btn-primary" style="-fx-padding: 8 16 8 16;"/>
+            </VBox>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <VBox spacing="4" alignment="BOTTOM_RIGHT">
+                <Label text=" "/>
+                <Button text="📥 Export Clean CSV" onAction="#handleExportCsv" styleClass="btn-success" style="-fx-padding: 8 18 8 18;"/>
+            </VBox>
+        </HBox>
+
+        <!-- Report Data Viewer -->
+        <VBox styleClass="content-panel" spacing="12">
+            <HBox alignment="CENTER_LEFT">
+                <VBox spacing="2" HBox.hgrow="ALWAYS">
+                    <Label fx:id="reportTitleLabel" text="Inventory Valuation Report" styleClass="content-header-title"/>
+                    <Label fx:id="reportSummaryLabel" text="Generated live from database" styleClass="content-header-desc"/>
+                </VBox>
+            </HBox>
+
+            <TableView fx:id="reportTable" prefHeight="480">
+                <!-- Dynamic columns constructed automatically based on report selection -->
+            </TableView>
+        </VBox>
+    </VBox>
+</ScrollPane>

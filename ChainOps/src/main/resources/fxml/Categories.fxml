@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.supplychainx.controller.CategoryController"
+            fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+
+    <VBox spacing="20">
+        <padding>
+            <Insets top="20" right="24" bottom="24" left="24"/>
+        </padding>
+
+        <!-- Header -->
+        <HBox alignment="CENTER_LEFT" spacing="12">
+            <VBox spacing="2" HBox.hgrow="ALWAYS">
+                <Label text="Product Category Hierarchy" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #0F172A;"/>
+                <Label text="Organize product lines, safety equipment, raw commodities, and assembly parts" style="-fx-font-size: 12px; -fx-text-fill: #64748B;"/>
+            </VBox>
+        </HBox>
+
+        <!-- Toolbar -->
+        <HBox alignment="CENTER_LEFT" spacing="12" styleClass="content-panel" style="-fx-padding: 12 16 12 16;">
+            <TextField fx:id="searchField" promptText="🔍 Search category name or code..." prefWidth="300" styleClass="text-field"/>
+            <Button text="Search" onAction="#handleSearch" styleClass="btn-primary"/>
+            <Button text="Reset" onAction="#handleReset" styleClass="btn-secondary"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="➕ New Category" onAction="#handleNewCategory" styleClass="btn-secondary" style="-fx-text-fill: #2563EB; -fx-border-color: #93C5FD;"/>
+            <Button text="🗑️ Delete" onAction="#handleDeleteCategory" styleClass="btn-danger"/>
+        </HBox>
+
+        <GridPane hgap="16">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="62"/>
+                <ColumnConstraints percentWidth="38"/>
+            </columnConstraints>
+
+            <!-- Table -->
+            <VBox GridPane.columnIndex="0" styleClass="content-panel" spacing="12">
+                <Label text="Registered Categories" styleClass="content-header-title"/>
+                <TableView fx:id="categoryTable" prefHeight="420" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
+                        <TableColumn fx:id="colCode" text="Category Code" prefWidth="120"/>
+                        <TableColumn fx:id="colName" text="Category Name" prefWidth="180"/>
+                        <TableColumn fx:id="colProdCount" text="Products Assigned" prefWidth="130"/>
+                        <TableColumn fx:id="colStatus" text="Status" prefWidth="90"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <!-- Form -->
+            <VBox GridPane.columnIndex="1" styleClass="content-panel" spacing="12">
+                <Label fx:id="formTitleLabel" text="Add New Category" styleClass="content-header-title"/>
+                <Label text="Define category codes and classification taxonomy" styleClass="content-header-desc"/>
+
+                <VBox spacing="10">
+                    <VBox spacing="4">
+                        <Label text="Category Code" styleClass="form-label"/>
+                        <TextField fx:id="codeField" promptText="e.g. CAT-RAW" styleClass="text-field"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="Category Name" styleClass="form-label"/>
+                        <TextField fx:id="nameField" promptText="Industrial Raw Materials" styleClass="text-field"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="Category Status" styleClass="form-label"/>
+                        <ComboBox fx:id="statusCombo" maxWidth="Infinity" styleClass="combo-box"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="Taxonomy Description" styleClass="form-label"/>
+                        <TextArea fx:id="descArea" promptText="Provide context on which products belong here..." prefRowCount="4" styleClass="text-field"/>
+                    </VBox>
+
+                    <Button text="💾 Save Category" onAction="#handleSaveCategory" maxWidth="Infinity" styleClass="btn-primary" style="-fx-padding: 10; -fx-font-size: 13px;"/>
+                </VBox>
+            </VBox>
+        </GridPane>
+    </VBox>
+</ScrollPane>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.supplychainx.controller.SupplierController"
+            fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+
+    <VBox spacing="20">
+        <padding>
+            <Insets top="20" right="24" bottom="24" left="24"/>
+        </padding>
+
+        <!-- Header -->
+        <HBox alignment="CENTER_LEFT" spacing="12">
+            <VBox spacing="2" HBox.hgrow="ALWAYS">
+                <Label text="Supplier &amp; Vendor Management" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #0F172A;"/>
+                <Label text="Maintain vendor profiles, contact personnel, enterprise communication channels, and vetting status" style="-fx-font-size: 12px; -fx-text-fill: #64748B;"/>
+            </VBox>
+        </HBox>
+
+        <!-- Toolbar -->
+        <HBox alignment="CENTER_LEFT" spacing="12" styleClass="content-panel" style="-fx-padding: 12 16 12 16;">
+            <TextField fx:id="searchField" promptText="🔍 Search supplier name, contact, city, country..." prefWidth="320" styleClass="text-field"/>
+            <ComboBox fx:id="filterStatusCombo" prefWidth="140" styleClass="combo-box"/>
+            <Button text="Filter" onAction="#handleSearchAndFilter" styleClass="btn-primary"/>
+            <Button text="Reset" onAction="#handleResetFilter" styleClass="btn-secondary"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="➕ New Supplier" onAction="#handleNewSupplier" styleClass="btn-secondary" style="-fx-text-fill: #2563EB; -fx-border-color: #93C5FD;"/>
+            <Button text="🗑️ Delete" onAction="#handleDeleteSupplier" styleClass="btn-danger"/>
+        </HBox>
+
+        <GridPane hgap="16">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="62"/>
+                <ColumnConstraints percentWidth="38"/>
+            </columnConstraints>
+
+            <!-- Table -->
+            <VBox GridPane.columnIndex="0" styleClass="content-panel" spacing="12">
+                <Label text="Approved Supplier Directory" styleClass="content-header-title"/>
+                <TableView fx:id="supplierTable" prefHeight="480" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
+                        <TableColumn fx:id="colName" text="Supplier Name" prefWidth="170"/>
+                        <TableColumn fx:id="colContact" text="Contact Person" prefWidth="130"/>
+                        <TableColumn fx:id="colEmail" text="Email" prefWidth="150"/>
+                        <TableColumn fx:id="colPhone" text="Phone" prefWidth="110"/>
+                        <TableColumn fx:id="colCity" text="City" prefWidth="90"/>
+                        <TableColumn fx:id="colCountry" text="Country" prefWidth="90"/>
+                        <TableColumn fx:id="colStatus" text="Status" prefWidth="90"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <!-- Form -->
+            <VBox GridPane.columnIndex="1" styleClass="content-panel" spacing="12">
+                <Label fx:id="formTitleLabel" text="Register New Supplier" styleClass="content-header-title"/>
+                <Label text="Vendor corporate information and points of contact" styleClass="content-header-desc"/>
+
+                <VBox spacing="10">
+                    <VBox spacing="4">
+                        <Label text="Supplier Company Name" styleClass="form-label"/>
+                        <TextField fx:id="nameField" promptText="Apex Metallurgical Corp" styleClass="text-field"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="Primary Contact Person" styleClass="form-label"/>
+                        <TextField fx:id="contactField" promptText="Marcus Thorne" styleClass="text-field"/>
+                    </VBox>
+
+                    <HBox spacing="10">
+                        <VBox spacing="4" HBox.hgrow="ALWAYS">
+                            <Label text="Corporate Email" styleClass="form-label"/>
+                            <TextField fx:id="emailField" promptText="orders@apexmetallurgical.com" styleClass="text-field"/>
+                        </VBox>
+                        <VBox spacing="4" HBox.hgrow="ALWAYS">
+                            <Label text="Phone Number" styleClass="form-label"/>
+                            <TextField fx:id="phoneField" promptText="+1-555-019-2831" styleClass="text-field"/>
+                        </VBox>
+                    </HBox>
+
+                    <VBox spacing="4">
+                        <Label text="Street Address" styleClass="form-label"/>
+                        <TextField fx:id="addressField" promptText="800 Iron Forge Pkwy" styleClass="text-field"/>
+                    </VBox>
+
+                    <HBox spacing="10">
+                        <VBox spacing="4" HBox.hgrow="ALWAYS">
+                            <Label text="City" styleClass="form-label"/>
+                            <TextField fx:id="cityField" promptText="Pittsburgh" styleClass="text-field"/>
+                        </VBox>
+                        <VBox spacing="4" HBox.hgrow="ALWAYS">
+                            <Label text="Country" styleClass="form-label"/>
+                            <TextField fx:id="countryField" promptText="USA" styleClass="text-field"/>
+                        </VBox>
+                    </HBox>
+
+                    <VBox spacing="4">
+                        <Label text="Supplier Status" styleClass="form-label"/>
+                        <ComboBox fx:id="statusCombo" maxWidth="Infinity" styleClass="combo-box"/>
+                    </VBox>
+
+                    <Button text="💾 Save Supplier Record" onAction="#handleSaveSupplier" maxWidth="Infinity" styleClass="btn-primary" style="-fx-padding: 10; -fx-font-size: 13px;"/>
+                </VBox>
+            </VBox>
+        </GridPane>
+    </VBox>
+</ScrollPane>

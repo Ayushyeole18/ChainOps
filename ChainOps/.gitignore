@@ -1,0 +1,12 @@
+target/
+*.class
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+*.log
+src/main/resources/config/db.properties
+!src/main/resources/config/db.example.properties
+.DS_Store

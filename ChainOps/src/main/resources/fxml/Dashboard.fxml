@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.supplychainx.controller.DashboardController"
+            fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+
+    <VBox spacing="20">
+        <padding>
+            <Insets top="24" right="24" bottom="24" left="24"/>
+        </padding>
+
+        <!-- Top Actions Bar -->
+        <HBox alignment="CENTER_LEFT" spacing="12">
+            <VBox spacing="2" HBox.hgrow="ALWAYS">
+                <Label text="Supply Chain Executive Dashboard" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #0F172A;"/>
+                <Label text="Real-time operational metrics across procurement, fulfillment, and multi-hub inventory" style="-fx-font-size: 12px; -fx-text-fill: #64748B;"/>
+            </VBox>
+            <Button text="🔄  Refresh Live Data" onAction="#handleRefresh" styleClass="btn-secondary"/>
+        </HBox>
+
+        <!-- 8 Metric Cards Grid -->
+        <GridPane hgap="16" vgap="16">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="25"/>
+                <ColumnConstraints percentWidth="25"/>
+                <ColumnConstraints percentWidth="25"/>
+                <ColumnConstraints percentWidth="25"/>
+            </columnConstraints>
+
+            <!-- Row 1 -->
+            <VBox GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="stat-card">
+                <Label text="TOTAL ACTIVE PRODUCTS" styleClass="stat-card-title"/>
+                <Label fx:id="totalProductsLabel" text="0" styleClass="stat-card-value"/>
+                <Label text="Catalog items tracked" styleClass="stat-card-sub"/>
+            </VBox>
+
+            <VBox GridPane.columnIndex="1" GridPane.rowIndex="0" styleClass="stat-card">
+                <Label text="TOTAL PHYSICAL STOCK UNITS" styleClass="stat-card-title"/>
+                <Label fx:id="totalInventoryLabel" text="0" styleClass="stat-card-value"/>
+                <Label text="Across all active facilities" styleClass="stat-card-sub"/>
+            </VBox>
+
+            <VBox GridPane.columnIndex="2" GridPane.rowIndex="0" styleClass="stat-card">
+                <Label text="CRITICAL LOW STOCK ALERTS" styleClass="stat-card-title"/>
+                <Label fx:id="lowStockLabel" text="0" styleClass="stat-card-value" style="-fx-text-fill: #EF4444;"/>
+                <Label text="Below safety reorder threshold" styleClass="stat-card-sub-danger"/>
+            </VBox>
+
+            <VBox GridPane.columnIndex="3" GridPane.rowIndex="0" styleClass="stat-card">
+                <Label text="VERIFIED SUPPLIERS" styleClass="stat-card-title"/>
+                <Label fx:id="activeSuppliersLabel" text="0" styleClass="stat-card-value"/>
+                <Label text="Global tier-1 vendors" styleClass="stat-card-sub"/>
+            </VBox>
+
+            <!-- Row 2 -->
+            <VBox GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="stat-card">
+                <Label text="PENDING PURCHASE ORDERS" styleClass="stat-card-title"/>
+                <Label fx:id="pendingPoLabel" text="0" styleClass="stat-card-value" style="-fx-text-fill: #F59E0B;"/>
+                <Label text="Inbound awaiting delivery" styleClass="stat-card-sub-warning"/>
+            </VBox>
+
+            <VBox GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="stat-card">
+                <Label text="PENDING SALES ORDERS" styleClass="stat-card-title"/>
+                <Label fx:id="pendingSoLabel" text="0" styleClass="stat-card-value" style="-fx-text-fill: #2563EB;"/>
+                <Label text="Orders awaiting processing" styleClass="stat-card-sub"/>
+            </VBox>
+
+            <VBox GridPane.columnIndex="2" GridPane.rowIndex="1" styleClass="stat-card">
+                <Label text="ACTIVE SHIPMENTS" styleClass="stat-card-title"/>
+                <Label fx:id="activeShipmentsLabel" text="0" styleClass="stat-card-value"/>
+                <Label text="In-transit &amp; ready" styleClass="stat-card-sub"/>
+            </VBox>
+
+            <VBox GridPane.columnIndex="3" GridPane.rowIndex="1" styleClass="stat-card">
+                <Label text="FULFILLMENT WAREHOUSES" styleClass="stat-card-title"/>
+                <Label fx:id="totalWarehousesLabel" text="0" styleClass="stat-card-value"/>
+                <Label text="Regional distribution hubs" styleClass="stat-card-sub"/>
+            </VBox>
+        </GridPane>
+
+        <!-- Charts Section -->
+        <GridPane hgap="16" vgap="16">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="50"/>
+                <ColumnConstraints percentWidth="50"/>
+            </columnConstraints>
+
+            <!-- Chart 1: Inventory by Category -->
+            <VBox GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="content-panel" prefHeight="340">
+                <Label text="Stock Distribution by Category" styleClass="content-header-title"/>
+                <Label text="Units breakdown across item categories" styleClass="content-header-desc"/>
+                <PieChart fx:id="categoryPieChart" legendSide="RIGHT" VBox.vgrow="ALWAYS"/>
+            </VBox>
+
+            <!-- Chart 2: Warehouse Stock -->
+            <VBox GridPane.columnIndex="1" GridPane.rowIndex="0" styleClass="content-panel" prefHeight="340">
+                <Label text="Inventory Volume by Facility" styleClass="content-header-title"/>
+                <Label text="Current total physical stock units per warehouse" styleClass="content-header-desc"/>
+                <BarChart fx:id="warehouseBarChart" legendVisible="false" VBox.vgrow="ALWAYS">
+                    <xAxis><CategoryAxis fx:id="warehouseXAxis"/></xAxis>
+                    <yAxis><NumberAxis fx:id="warehouseYAxis" label="Units"/></yAxis>
+                </BarChart>
+            </VBox>
+
+            <!-- Chart 3: Order Status Distribution -->
+            <VBox GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="content-panel" prefHeight="340">
+                <Label text="Sales Order Status Pipeline" styleClass="content-header-title"/>
+                <Label text="Distribution of orders by operational lifecycle state" styleClass="content-header-desc"/>
+                <PieChart fx:id="orderStatusPieChart" legendSide="RIGHT" VBox.vgrow="ALWAYS"/>
+            </VBox>
+
+            <!-- Chart 4: Monthly Sales -->
+            <VBox GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="content-panel" prefHeight="340">
+                <Label text="Monthly Sales Revenue Trends" styleClass="content-header-title"/>
+                <Label text="Confirmed gross revenue generated across recent order cycles" styleClass="content-header-desc"/>
+                <LineChart fx:id="salesLineChart" legendVisible="false" VBox.vgrow="ALWAYS">
+                    <xAxis><CategoryAxis fx:id="salesXAxis"/></xAxis>
+                    <yAxis><NumberAxis fx:id="salesYAxis" label="Revenue ($)"/yAxis>
+                </LineChart>
+            </VBox>
+        </GridPane>
+    </VBox>
+</ScrollPane>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.supplychainx.controller.InventoryController"
+            fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+
+    <VBox spacing="20">
+        <padding>
+            <Insets top="20" right="24" bottom="24" left="24"/>
+        </padding>
+
+        <!-- Header -->
+        <HBox alignment="CENTER_LEFT" spacing="12">
+            <VBox spacing="2" HBox.hgrow="ALWAYS">
+                <Label text="Inventory Management &amp; Stock Levels" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #0F172A;"/>
+                <Label text="Monitor real-time warehouse inventory, trigger manual adjustments, and audit stock transaction histories" style="-fx-font-size: 12px; -fx-text-fill: #64748B;"/>
+            </VBox>
+        </HBox>
+
+        <!-- Filter & Search Toolbar -->
+        <HBox alignment="CENTER_LEFT" spacing="12" styleClass="content-panel" style="-fx-padding: 12 16 12 16;">
+            <TextField fx:id="searchField" promptText="🔍 Search product name, SKU, or category..." prefWidth="280" styleClass="text-field"/>
+            <ComboBox fx:id="warehouseFilterCombo" prefWidth="180" styleClass="combo-box"/>
+            <ComboBox fx:id="statusFilterCombo" prefWidth="140" styleClass="combo-box"/>
+            <Button text="Filter" onAction="#handleSearchAndFilter" styleClass="btn-primary"/>
+            <Button text="Reset" onAction="#handleResetFilter" styleClass="btn-secondary"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="⚠️  Show Low Stock Only" onAction="#handleFilterLowStockOnly" styleClass="btn-secondary" style="-fx-text-fill: #DC2626; -fx-border-color: #FCA5A5;"/>
+        </HBox>
+
+        <!-- Main Content Area: Table on Left, Adjustment Panel on Right -->
+        <GridPane hgap="16">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="68"/>
+                <ColumnConstraints percentWidth="32"/>
+            </columnConstraints>
+
+            <!-- Left: Inventory Table -->
+            <VBox GridPane.columnIndex="0" styleClass="content-panel" spacing="12">
+                <Label text="Warehouse Stock Levels" styleClass="content-header-title"/>
+                <TableView fx:id="inventoryTable" prefHeight="380" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colSku" text="SKU" prefWidth="110"/>
+                        <TableColumn fx:id="colProduct" text="Product Name" prefWidth="180"/>
+                        <TableColumn fx:id="colWarehouse" text="Warehouse" prefWidth="120"/>
+                        <TableColumn fx:id="colCategory" text="Category" prefWidth="120"/>
+                        <TableColumn fx:id="colAvailable" text="Available" prefWidth="75"/>
+                        <TableColumn fx:id="colReserved" text="Reserved" prefWidth="75"/>
+                        <TableColumn fx:id="colReorder" text="Reorder" prefWidth="70"/>
+                        <TableColumn fx:id="colStatus" text="Stock Status" prefWidth="110"/>
+                        <TableColumn fx:id="colUpdated" text="Last Counted" prefWidth="130"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <!-- Right: Stock Adjustment Action Box -->
+            <VBox GridPane.columnIndex="1" styleClass="content-panel" spacing="12">
+                <Label text="Manual Stock In / Adjustment" styleClass="content-header-title"/>
+                <Label text="Record inbound stock, write-offs, or cycle counts" styleClass="content-header-desc"/>
+
+                <VBox spacing="10">
+                    <VBox spacing="4">
+                        <Label text="Product" styleClass="form-label"/>
+                        <ComboBox fx:id="adjProductCombo" maxWidth="Infinity" styleClass="combo-box"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="Target Warehouse" styleClass="form-label"/>
+                        <ComboBox fx:id="adjWarehouseCombo" maxWidth="Infinity" styleClass="combo-box"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="Movement Type" styleClass="form-label"/>
+                        <ComboBox fx:id="adjTypeCombo" maxWidth="Infinity" styleClass="combo-box"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="Quantity Units" styleClass="form-label"/>
+                        <TextField fx:id="adjQuantityField" promptText="e.g. 50" styleClass="text-field"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="Reference / Document #" styleClass="form-label"/>
+                        <TextField fx:id="adjReferenceField" promptText="e.g. ADJ-2026-001" styleClass="text-field"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="Notes / Reason" styleClass="form-label"/>
+                        <TextArea fx:id="adjNotesArea" promptText="Enter justification or audit log notes..." prefRowCount="3" styleClass="text-field"/>
+                    </VBox>
+
+                    <Button text="Execute Stock Adjustment" onAction="#handleExecuteAdjustment" maxWidth="Infinity" styleClass="btn-primary" style="-fx-padding: 10;"/>
+                </VBox>
+            </VBox>
+        </GridPane>
+
+        <!-- Bottom: Stock Transaction Audit History -->
+        <VBox styleClass="content-panel" spacing="12">
+            <Label text="Stock Transaction Audit Trail (Last 500 Movements)" styleClass="content-header-title"/>
+            <Label text="Permanent immutable ledger of every inbound PO, outbound SO, stock transfer, and manual adjustment" styleClass="content-header-desc"/>
+
+            <TableView fx:id="auditTable" prefHeight="260">
+                <columns>
+                    <TableColumn fx:id="colAuditDate" text="Timestamp" prefWidth="140"/>
+                    <TableColumn fx:id="colAuditSku" text="SKU" prefWidth="100"/>
+                    <TableColumn fx:id="colAuditProduct" text="Product" prefWidth="180"/>
+                    <TableColumn fx:id="colAuditWarehouse" text="Warehouse" prefWidth="130"/>
+                    <TableColumn fx:id="colAuditType" text="Movement Type" prefWidth="130"/>
+                    <TableColumn fx:id="colAuditQty" text="Delta Qty" prefWidth="90"/>
+                    <TableColumn fx:id="colAuditRef" text="Reference #" prefWidth="120"/>
+                    <TableColumn fx:id="colAuditUser" text="Operator" prefWidth="130"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </VBox>
+</ScrollPane>

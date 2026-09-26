@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.supplychainx.controller.StockTransferController"
+            fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+
+    <VBox spacing="20">
+        <padding>
+            <Insets top="20" right="24" bottom="24" left="24"/>
+        </padding>
+
+        <!-- Header -->
+        <HBox alignment="CENTER_LEFT" spacing="12">
+            <VBox spacing="2" HBox.hgrow="ALWAYS">
+                <Label text="Inter-Warehouse Stock Transfers" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #0F172A;"/>
+                <Label text="Rebalance inventory levels across facilities with atomic multi-warehouse transactions and audit logging" style="-fx-font-size: 12px; -fx-text-fill: #64748B;"/>
+            </VBox>
+        </HBox>
+
+        <!-- Toolbar -->
+        <HBox alignment="CENTER_LEFT" spacing="12" styleClass="content-panel" style="-fx-padding: 12 16 12 16;">
+            <TextField fx:id="searchField" promptText="🔍 Search transfer #, warehouse name..." prefWidth="300" styleClass="text-field"/>
+            <ComboBox fx:id="statusFilterCombo" prefWidth="150" styleClass="combo-box"/>
+            <Button text="Filter" onAction="#handleSearchAndFilter" styleClass="btn-primary"/>
+            <Button text="Reset" onAction="#handleResetFilter" styleClass="btn-secondary"/>
+        </HBox>
+
+        <!-- Main Layout: Transfers Table + Execution Panel -->
+        <GridPane hgap="16">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="62"/>
+                <ColumnConstraints percentWidth="38"/>
+            </columnConstraints>
+
+            <!-- Left: Transfers Ledger -->
+            <VBox GridPane.columnIndex="0" styleClass="content-panel" spacing="12">
+                <Label text="Transfer Orders Ledger" styleClass="content-header-title"/>
+                <TableView fx:id="transferTable" prefHeight="450" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colTransferNum" text="Transfer #" prefWidth="120"/>
+                        <TableColumn fx:id="colSource" text="Source Hub" prefWidth="150"/>
+                        <TableColumn fx:id="colDest" text="Destination Hub" prefWidth="150"/>
+                        <TableColumn fx:id="colDate" text="Date" prefWidth="100"/>
+                        <TableColumn fx:id="colStatus" text="Status" prefWidth="110"/>
+                        <TableColumn fx:id="colUser" text="Initiated By" prefWidth="120"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <!-- Right: Transfer Workflow Card -->
+            <VBox GridPane.columnIndex="1" styleClass="content-panel" spacing="14">
+                <Label text="Execute Facility Transfer" styleClass="content-header-title"/>
+                <Label text="Select origin, destination and verify stock levels" styleClass="content-header-desc"/>
+
+                <VBox spacing="10">
+                    <VBox spacing="4">
+                        <Label text="Source Warehouse (Origin)" styleClass="form-label"/>
+                        <ComboBox fx:id="sourceWarehouseCombo" maxWidth="Infinity" styleClass="combo-box"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="Product to Transfer" styleClass="form-label"/>
+                        <ComboBox fx:id="productCombo" maxWidth="Infinity" styleClass="combo-box"/>
+                    </VBox>
+
+                    <!-- Real-time availability indicator -->
+                    <Label fx:id="availableStockLabel" text="Select origin and product to check availability"
+                           style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #2563EB; -fx-background-color: #EFF6FF; -fx-padding: 6 10 6 10; -fx-background-radius: 6;"/>
+
+                    <VBox spacing="4">
+                        <Label text="Quantity to Transfer" styleClass="form-label"/>
+                        <TextField fx:id="quantityField" promptText="Units to relocate..." styleClass="text-field"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="Destination Warehouse (Target)" styleClass="form-label"/>
+                        <ComboBox fx:id="destWarehouseCombo" maxWidth="Infinity" styleClass="combo-box"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="Transfer Notes / Logistics Docket" styleClass="form-label"/>
+                        <TextArea fx:id="notesArea" promptText="Enter inter-facility transfer reason or logistics carrier..." prefRowCount="3" styleClass="text-field"/>
+                    </VBox>
+
+                    <Button text="🚀 Authorize &amp; Execute Transfer" onAction="#handleExecuteTransfer" maxWidth="Infinity" styleClass="btn-primary" style="-fx-padding: 12; -fx-font-size: 13px;"/>
+                </VBox>
+            </VBox>
+        </GridPane>
+    </VBox>
+</ScrollPane>
