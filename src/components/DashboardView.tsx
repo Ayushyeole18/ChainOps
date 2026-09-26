@@ -10,7 +10,10 @@ import {
   Warehouse,
   ArrowUpRight,
   TrendingUp,
-  Clock
+  Clock,
+  Brain,
+  ArrowRight,
+  Sparkles
 } from 'lucide-react';
 import {
   Product,
@@ -233,6 +236,74 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           </div>
           <div className="text-2xl font-bold text-slate-900">{totalWarehouses}</div>
           <div className="text-[11px] text-slate-500 mt-1">Operational regional hubs</div>
+        </div>
+      </div>
+
+      {/* AI / ML Operational Intelligence Banner & Insights */}
+      <div className="bg-gradient-to-r from-blue-900/5 via-slate-900/5 to-indigo-900/5 border border-blue-200/80 rounded-2xl p-5 shadow-xs space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center shadow-xs">
+              <Brain className="w-4 h-4" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h3 className="text-sm font-bold text-slate-900">AI / ML Operational Intelligence &amp; Risk Radar</h3>
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-800 border border-blue-200">
+                  ML PREDICTIONS
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-500">
+                Automated regression forecasts, lead-time variance analysis, and predictive replenishment alerts
+              </p>
+            </div>
+          </div>
+
+          <button
+            onClick={() => onNavigateTab('ai-intelligence')}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-xs transition-colors cursor-pointer shrink-0"
+          >
+            <span>Explore AI Intelligence</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div
+            onClick={() => onNavigateTab('ai-intelligence')}
+            className="bg-white p-3.5 rounded-xl border border-red-200/80 shadow-xs hover:border-red-400 transition-colors cursor-pointer"
+          >
+            <span className="text-[10px] font-bold text-red-600 uppercase tracking-wider block">High Stock-Out Threats</span>
+            <span className="text-base font-bold text-slate-900 mt-1 block">4 SKUs at Critical Risk</span>
+            <span className="text-[11px] text-slate-500 mt-0.5 block truncate">SKU-ELEC-201, SKU-TOOL-501</span>
+          </div>
+
+          <div
+            onClick={() => onNavigateTab('ai-intelligence')}
+            className="bg-white p-3.5 rounded-xl border border-emerald-200/80 shadow-xs hover:border-emerald-400 transition-colors cursor-pointer"
+          >
+            <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider block">30-Day Demand Surges</span>
+            <span className="text-base font-bold text-slate-900 mt-1 block">+28.5% Projected Growth</span>
+            <span className="text-[11px] text-slate-500 mt-0.5 block truncate">Precision Electronics &amp; Tooling</span>
+          </div>
+
+          <div
+            onClick={() => onNavigateTab('ai-intelligence')}
+            className="bg-white p-3.5 rounded-xl border border-amber-200/80 shadow-xs hover:border-amber-400 transition-colors cursor-pointer"
+          >
+            <span className="text-[10px] font-bold text-amber-600 uppercase tracking-wider block">Supplier Delay Radar</span>
+            <span className="text-base font-bold text-slate-900 mt-1 block">2 Vendors Elevated Risk</span>
+            <span className="text-[11px] text-slate-500 mt-0.5 block truncate">SiliconCore Dynamics (31% delay)</span>
+          </div>
+
+          <div
+            onClick={() => onNavigateTab('ai-intelligence')}
+            className="bg-white p-3.5 rounded-xl border border-blue-200/80 shadow-xs hover:border-blue-400 transition-colors cursor-pointer"
+          >
+            <span className="text-[10px] font-bold text-blue-600 uppercase tracking-wider block">Recommended Reorder</span>
+            <span className="text-base font-bold text-slate-900 mt-1 block">6 Orders Suggested</span>
+            <span className="text-[11px] text-slate-500 mt-0.5 block truncate">Est. Spend: $69,425</span>
+          </div>
         </div>
       </div>
 

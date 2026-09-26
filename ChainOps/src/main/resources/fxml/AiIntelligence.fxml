@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.supplychainx.controller.AiIntelligenceController"
+            fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+
+    <VBox spacing="20">
+        <padding>
+            <Insets top="24" right="24" bottom="24" left="24"/>
+        </padding>
+
+        <!-- Top Actions Bar -->
+        <HBox alignment="CENTER_LEFT" spacing="12">
+            <VBox spacing="2" HBox.hgrow="ALWAYS">
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label text="AI / ML Predictive Supply Chain Intelligence" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #0F172A;"/>
+                    <Label text="AI ENGINE ACTIVE" style="-fx-background-color: #DBEAFE; -fx-text-fill: #1D4ED8; -fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 3 8 3 8; -fx-background-radius: 999;"/>
+                </HBox>
+                <Label text="Machine learning demand projections, lead-time variance, and stockout risk models" style="-fx-font-size: 12px; -fx-text-fill: #64748B;"/>
+            </VBox>
+            <HBox spacing="10" alignment="CENTER">
+                <ProgressIndicator fx:id="trainingProgress" prefWidth="24" prefHeight="24" visible="false"/>
+                <Button fx:id="trainModelsBtn" text="🧠  Train &amp; Refresh AI Models" onAction="#handleTrainModels" styleClass="btn-primary" style="-fx-font-size: 12px; -fx-font-weight: bold;"/>
+            </HBox>
+        </HBox>
+
+        <!-- 4 Model Performance Cards -->
+        <GridPane hgap="16" vgap="16">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="25"/>
+                <ColumnConstraints percentWidth="25"/>
+                <ColumnConstraints percentWidth="25"/>
+                <ColumnConstraints percentWidth="25"/>
+            </columnConstraints>
+
+            <VBox GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="stat-card" style="-fx-border-color: #3B82F6;">
+                <Label text="DEMAND FORECAST (OLS REGRESSION)" styleClass="stat-card-title" style="-fx-text-fill: #2563EB;"/>
+                <HBox spacing="8" alignment="BASELINE_LEFT">
+                    <Label fx:id="forecastMaeLabel" text="4.35" styleClass="stat-card-value" style="-fx-font-size: 22px;"/>
+                    <Label text="MAE" style="-fx-font-size: 11px; -fx-text-fill: #64748B; -fx-font-weight: bold;"/>
+                </HBox>
+                <Label fx:id="forecastR2Label" text="R² Score: 0.892" styleClass="stat-card-sub" style="-fx-text-fill: #059669;"/>
+            </VBox>
+
+            <VBox GridPane.columnIndex="1" GridPane.rowIndex="0" styleClass="stat-card" style="-fx-border-color: #10B981;">
+                <Label text="STOCKOUT RISK PREDICTOR" styleClass="stat-card-title" style="-fx-text-fill: #059669;"/>
+                <HBox spacing="8" alignment="BASELINE_LEFT">
+                    <Label fx:id="stockRiskAccLabel" text="94.5%" styleClass="stat-card-value" style="-fx-font-size: 22px; -fx-text-fill: #059669;"/>
+                    <Label text="Accuracy" style="-fx-font-size: 11px; -fx-text-fill: #64748B; -fx-font-weight: bold;"/>
+                </HBox>
+                <Label text="Lead-Time Runout Model" styleClass="stat-card-sub"/>
+            </VBox>
+
+            <VBox GridPane.columnIndex="2" GridPane.rowIndex="0" styleClass="stat-card" style="-fx-border-color: #F59E0B;">
+                <Label text="SUPPLIER DELAY CLASSIFIER" styleClass="stat-card-title" style="-fx-text-fill: #D97706;"/>
+                <HBox spacing="8" alignment="BASELINE_LEFT">
+                    <Label fx:id="supplierDelayAccLabel" text="91.8%" styleClass="stat-card-value" style="-fx-font-size: 22px; -fx-text-fill: #D97706;"/>
+                    <Label text="Accuracy" style="-fx-font-size: 11px; -fx-text-fill: #64748B; -fx-font-weight: bold;"/>
+                </HBox>
+                <Label text="Bayesian Risk Estimator" styleClass="stat-card-sub"/>
+            </VBox>
+
+            <VBox GridPane.columnIndex="3" GridPane.rowIndex="0" styleClass="stat-card">
+                <Label text="MODEL STATUS &amp; PIPELINE" styleClass="stat-card-title"/>
+                <Label text="Active (Online)" styleClass="stat-card-value" style="-fx-font-size: 20px; -fx-text-fill: #059669;"/>
+                <Label fx:id="lastTrainedAtLabel" text="Last Trained: Just Now" styleClass="stat-card-sub"/>
+            </VBox>
+        </GridPane>
+
+        <!-- Product Demand Forecast Explorer Card -->
+        <VBox spacing="14" styleClass="chart-card">
+            <HBox alignment="CENTER_LEFT" spacing="12">
+                <VBox spacing="2" HBox.hgrow="ALWAYS">
+                    <Label text="AI Demand Forecasting (7-Day &amp; 30-Day Horizon)" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #0F172A;"/>
+                    <Label text="Select any product to inspect OLS linear trend regression, daily velocity, and confidence intervals" style="-fx-font-size: 12px; -fx-text-fill: #64748B;"/>
+                </VBox>
+                <HBox spacing="8" alignment="CENTER">
+                    <Label text="Select Product:" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #334155;"/>
+                    <ComboBox fx:id="productSelectorCombo" prefWidth="280" styleClass="combo-box"/>
+                </HBox>
+            </HBox>
+
+            <!-- Forecast KPI Badges -->
+            <GridPane hgap="12" vgap="12" style="-fx-background-color: #F8FAFC; -fx-padding: 16; -fx-background-radius: 8; -fx-border-color: #E2E8F0; -fx-border-radius: 8;">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="20"/>
+                    <ColumnConstraints percentWidth="20"/>
+                    <ColumnConstraints percentWidth="20"/>
+                    <ColumnConstraints percentWidth="20"/>
+                    <ColumnConstraints percentWidth="20"/>
+                </columnConstraints>
+
+                <VBox GridPane.columnIndex="0" spacing="2">
+                    <Label text="SKU &amp; PRODUCT" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #64748B;"/>
+                    <Label fx:id="selectedProductSkuLabel" text="SKU-ELEC-201" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #2563EB; -fx-font-family: monospace;"/>
+                    <Label fx:id="selectedProductNameLabel" text="Microcontroller 120MHz" style="-fx-font-size: 11px; -fx-text-fill: #334155;"/>
+                </VBox>
+
+                <VBox GridPane.columnIndex="1" spacing="2">
+                    <Label text="HISTORICAL VELOCITY" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #64748B;"/>
+                    <Label fx:id="historicalDailyAvgLabel" text="8.40 units/day" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #0F172A;"/>
+                    <Label text="Average daily burn rate" style="-fx-font-size: 10px; -fx-text-fill: #64748B;"/>
+                </VBox>
+
+                <VBox GridPane.columnIndex="2" spacing="2">
+                    <Label text="PREDICTED 7-DAY DEMAND" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #64748B;"/>
+                    <Label fx:id="predicted7dDemandLabel" text="59 units" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #2563EB;"/>
+                    <Label text="Immediate replenishment window" style="-fx-font-size: 10px; -fx-text-fill: #64748B;"/>
+                </VBox>
+
+                <VBox GridPane.columnIndex="3" spacing="2">
+                    <Label text="PREDICTED 30-DAY DEMAND" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #64748B;"/>
+                    <Label fx:id="predicted30dDemandLabel" text="275 units" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #059669;"/>
+                    <Label fx:id="confidenceIntervalLabel" text="245 - 305 units (95% CI)" style="-fx-font-size: 10px; -fx-text-fill: #64748B;"/>
+                </VBox>
+
+                <VBox GridPane.columnIndex="4" spacing="2">
+                    <Label text="TREND TRAJECTORY" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #64748B;"/>
+                    <Label fx:id="trendDirectionBadge" text="UP" style="-fx-font-size: 12px; -fx-font-weight: bold;"/>
+                    <Label fx:id="trendSlopeLabel" text="Slope: +0.3400 / day" style="-fx-font-size: 10px; -fx-text-fill: #64748B; -fx-font-family: monospace;"/>
+                </VBox>
+            </GridPane>
+        </VBox>
+
+        <!-- Predictive Tabbed Tables: Stockout Risk, Supplier Delay Risk, Smart Procurement -->
+        <TabPane tabClosingPolicy="UNAVAILABLE" styleClass="tab-pane" minHeight="360">
+            <!-- TAB 1: Stock-Out Risk Predictor -->
+            <Tab text="🚨  Stock-Out Risk Predictor">
+                <VBox spacing="10">
+                    <padding>
+                        <Insets top="14" right="14" bottom="14" left="14"/>
+                    </padding>
+                    <Label text="Dynamic inventory depletion projection based on live velocity and multi-warehouse balances." style="-fx-font-size: 12px; -fx-text-fill: #64748B;"/>
+                    <TableView fx:id="stockRiskTable" prefHeight="280" styleClass="table-view">
+                        <columns>
+                            <TableColumn fx:id="colRiskSku" text="SKU" prefWidth="120"/>
+                            <TableColumn fx:id="colRiskProduct" text="Product Name" prefWidth="260"/>
+                            <TableColumn fx:id="colRiskStock" text="Current Stock" prefWidth="110"/>
+                            <TableColumn fx:id="colRiskVelocity" text="Velocity (Units/Day)" prefWidth="130"/>
+                            <TableColumn fx:id="colRiskDays" text="Days to Stockout" prefWidth="130"/>
+                            <TableColumn fx:id="colRiskLevel" text="Risk Level" prefWidth="110"/>
+                            <TableColumn fx:id="colRiskReorder" text="Suggested Order Qty" prefWidth="140"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </Tab>
+
+            <!-- TAB 2: Supplier Delay Risk Analysis -->
+            <Tab text="⏱️  Supplier Delivery Delay Predictor">
+                <VBox spacing="10">
+                    <padding>
+                        <Insets top="14" right="14" bottom="14" left="14"/>
+                    </padding>
+                    <Label text="Empirical Bayes lead-time evaluation and historical purchase order delay probability classifier." style="-fx-font-size: 12px; -fx-text-fill: #64748B;"/>
+                    <TableView fx:id="supplierDelayTable" prefHeight="280" styleClass="table-view">
+                        <columns>
+                            <TableColumn fx:id="colSupplierName" text="Supplier Name" prefWidth="260"/>
+                            <TableColumn fx:id="colAvgLeadTime" text="Avg Lead Time (Days)" prefWidth="150"/>
+                            <TableColumn fx:id="colOrdersEvaluated" text="Orders Evaluated" prefWidth="130"/>
+                            <TableColumn fx:id="colDelayProb" text="Delay Probability (%)" prefWidth="150"/>
+                            <TableColumn fx:id="colDelayCategory" text="Risk Category" prefWidth="130"/>
+                            <TableColumn fx:id="colReliabilityScore" text="Reliability Index (0-100)" prefWidth="160"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </Tab>
+
+            <!-- TAB 3: Smart Procurement Recommendations -->
+            <Tab text="💡  AI Procurement Recommendations">
+                <VBox spacing="10">
+                    <padding>
+                        <Insets top="14" right="14" bottom="14" left="14"/>
+                    </padding>
+                    <Label text="Algorithmic reorder calculation balancing safety stocks, 30-day forecast, and supplier delay probabilities." style="-fx-font-size: 12px; -fx-text-fill: #64748B;"/>
+                    <TableView fx:id="procurementTable" prefHeight="280" styleClass="table-view">
+                        <columns>
+                            <TableColumn fx:id="colProcSku" text="SKU" prefWidth="120"/>
+                            <TableColumn fx:id="colProcProduct" text="Product Name" prefWidth="240"/>
+                            <TableColumn fx:id="colProcSupplier" text="Recommended Supplier" prefWidth="200"/>
+                            <TableColumn fx:id="colProcStock" text="Current Stock" prefWidth="100"/>
+                            <TableColumn fx:id="colProcRecommendedQty" text="Order Quantity" prefWidth="120"/>
+                            <TableColumn fx:id="colProcEstimatedCost" text="Est. Total Cost ($)" prefWidth="130"/>
+                            <TableColumn fx:id="colProcUrgency" text="Urgency" prefWidth="110"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </Tab>
+        </TabPane>
+    </VBox>
+</ScrollPane>

@@ -83,6 +83,53 @@
             </VBox>
         </GridPane>
 
+        <!-- AI / ML Operational Intelligence Banner & Insights -->
+        <VBox spacing="14" styleClass="content-panel" style="-fx-border-color: #3B82F6; -fx-background-color: #F8FAFC;">
+            <HBox alignment="CENTER_LEFT" spacing="12">
+                <VBox spacing="2" HBox.hgrow="ALWAYS">
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Label text="🧠  AI / ML Operational Intelligence &amp; Risk Radar" styleClass="content-header-title" style="-fx-text-fill: #1E3A8A;"/>
+                        <Label text="ML LIVE" style="-fx-background-color: #DBEAFE; -fx-text-fill: #1D4ED8; -fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 2 6 2 6; -fx-background-radius: 999;"/>
+                    </HBox>
+                    <Label text="Automated regression forecasts, lead-time variance analysis, and predictive replenishment alerts" styleClass="content-header-desc"/>
+                </VBox>
+                <Button text="Explore AI Intelligence →" onAction="#handleOpenAiIntelligence" styleClass="btn-primary" style="-fx-font-size: 11px;"/>
+            </HBox>
+
+            <GridPane hgap="12" vgap="12">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="25"/>
+                    <ColumnConstraints percentWidth="25"/>
+                    <ColumnConstraints percentWidth="25"/>
+                    <ColumnConstraints percentWidth="25"/>
+                </columnConstraints>
+
+                <VBox GridPane.columnIndex="0" style="-fx-background-color: white; -fx-padding: 12; -fx-background-radius: 8; -fx-border-color: #FEE2E2; -fx-border-radius: 8;">
+                    <Label text="HIGH STOCK-OUT THREATS" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #DC2626;"/>
+                    <Label fx:id="aiHighStockRiskLabel" text="3 SKUs at Critical Risk" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #0F172A;"/>
+                    <Label fx:id="aiHighRiskSkuLabel" text="SKU-ELEC-201, SKU-TOOL-501" style="-fx-font-size: 10px; -fx-text-fill: #64748B;"/>
+                </VBox>
+
+                <VBox GridPane.columnIndex="1" style="-fx-background-color: white; -fx-padding: 12; -fx-background-radius: 8; -fx-border-color: #D1FAE5; -fx-border-radius: 8;">
+                    <Label text="30-DAY DEMAND SURGES" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #059669;"/>
+                    <Label fx:id="aiDemandSurgeLabel" text="+32% Projected Growth" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #0F172A;"/>
+                    <Label fx:id="aiDemandSurgeDescLabel" text="Precision Electronics &amp; Tooling" style="-fx-font-size: 10px; -fx-text-fill: #64748B;"/>
+                </VBox>
+
+                <VBox GridPane.columnIndex="2" style="-fx-background-color: white; -fx-padding: 12; -fx-background-radius: 8; -fx-border-color: #FEF3C7; -fx-border-radius: 8;">
+                    <Label text="SUPPLIER DELAY RADAR" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #D97706;"/>
+                    <Label fx:id="aiSupplierDelayAlertLabel" text="2 Vendors Elevated Risk" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #0F172A;"/>
+                    <Label fx:id="aiSupplierDelayDescLabel" text="SiliconCore Dynamics (31% delay)" style="-fx-font-size: 10px; -fx-text-fill: #64748B;"/>
+                </VBox>
+
+                <VBox GridPane.columnIndex="3" style="-fx-background-color: white; -fx-padding: 12; -fx-background-radius: 8; -fx-border-color: #DBEAFE; -fx-border-radius: 8;">
+                    <Label text="RECOMMENDED REORDER" style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #2563EB;"/>
+                    <Label fx:id="aiReplenishCountLabel" text="6 Orders Recommended" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #0F172A;"/>
+                    <Label fx:id="aiReplenishCostLabel" text="Est. Spend: $24,850" style="-fx-font-size: 10px; -fx-text-fill: #64748B;"/>
+                </VBox>
+            </GridPane>
+        </VBox>
+
         <!-- Charts Section -->
         <GridPane hgap="16" vgap="16">
             <columnConstraints>

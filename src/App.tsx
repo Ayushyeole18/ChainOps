@@ -12,6 +12,11 @@ import {
   initialTransfers,
   initialUsers,
   initialRoles,
+  initialDemandForecasts,
+  initialStockRisks,
+  initialSupplierDelays,
+  initialProcurementRecommendations,
+  initialModelMetadata,
   Product,
   Category,
   Supplier,
@@ -22,7 +27,12 @@ import {
   SalesOrder,
   Shipment,
   StockTransfer,
-  User
+  User,
+  DemandForecast,
+  StockRiskPrediction,
+  SupplierDelayPrediction,
+  ProcurementRecommendation,
+  ModelTrainingMetadata
 } from './data/initialData';
 
 import { Sidebar, ActiveTab } from './components/Sidebar';
@@ -41,6 +51,8 @@ import { ReportsView } from './components/ReportsView';
 import { UsersView } from './components/UsersView';
 import { JavaExplorerView } from './components/JavaExplorerView';
 import { AuthView } from './components/AuthView';
+import { AiIntelligenceView } from './components/AiIntelligenceView';
+import { ArchitectureDiagram } from './components/ArchitectureDiagram';
 
 export default function App() {
   // Navigation
@@ -59,6 +71,61 @@ export default function App() {
   const [transfers, setTransfers] = useState<StockTransfer[]>(initialTransfers);
   const [users, setUsers] = useState<User[]>(initialUsers);
   const [currentUser, setCurrentUser] = useState<User | null>(initialUsers[0]); // Default to Administrator
+
+  // AI/ML States
+  const [demandForecasts, setDemandForecasts] = useState<DemandForecast[]>(initialDemandForecasts);
+  const [stockRisks, setStockRisks] = useState<StockRiskPrediction[]>(initialStockRisks);
+  const [supplierDelays, setSupplierDelays] = useState<SupplierDelayPrediction[]>(initialSupplierDelays);
+  const [procurementRecs, setProcurementRecs] = useState<ProcurementRecommendation[]>(initialProcurementRecommendations);
+  const [modelMetadata, setModelMetadata] = useState<ModelTrainingMetadata[]>(initialModelMetadata);
+  const [isTraining, setIsTraining] = useState<boolean>(false);
+
+  // Background Model Training & Re-evaluation Handler
+  const handleTrainModels = () => {
+    setIsTraining(true);
+    setTimeout(() => {
+      const now = new Date().toISOString().replace('T', ' ').substring(0, 19);
+      setDemandForecasts(prev =>
+        prev.map(df => ({
+          ...df,
+          predictedQuantity: Math.max(12, Math.round(df.predictedQuantity * (0.97 + Math.random() * 0.06))),
+          confidenceLower: Math.max(8, Math.round(df.confidenceLower * (0.97 + Math.random() * 0.06))),
+          confidenceUpper: Math.round(df.confidenceUpper * (0.97 + Math.random() * 0.06)),
+          calculatedAt: now
+        }))
+      );
+      setStockRisks(prev =>
+        prev.map(sr => {
+          const invTotal = inventory
+            .filter(i => i.productId === sr.productId)
+            .reduce((s, i) => s + i.quantityAvailable, 0);
+          const days = sr.dailyVelocity > 0 ? Math.round(invTotal / sr.dailyVelocity) : 99;
+          const level: 'LOW' | 'MEDIUM' | 'HIGH' = days <= 10 ? 'HIGH' : days <= 30 ? 'MEDIUM' : 'LOW';
+          return {
+            ...sr,
+            currentStock: invTotal,
+            daysUntilStockout: days,
+            riskLevel: level,
+            riskScore:
+              level === 'HIGH'
+                ? Math.min(99, Math.round(78 + (10 - Math.min(10, days)) * 2))
+                : level === 'MEDIUM'
+                ? Math.round(45 + Math.random() * 15)
+                : Math.round(12 + Math.random() * 12),
+            evaluatedAt: now
+          };
+        })
+      );
+      setModelMetadata(prev =>
+        prev.map(mm => ({
+          ...mm,
+          lastTrainedAt: now,
+          trainingDurationMs: Math.floor(650 + Math.random() * 350)
+        }))
+      );
+      setIsTraining(false);
+    }, 1100);
+  };
 
   // Reset Demo Data
   const handleResetData = () => {
@@ -482,6 +549,7 @@ export default function App() {
   // Page Title Mapping
   const tabTitles: Record<ActiveTab, string> = {
     dashboard: 'Executive Dashboard & Real-Time Analytics',
+    'ai-intelligence': 'AI/ML Predictive Intelligence & Demand Forecasting',
     inventory: 'Inventory Stock & In/Out Movements',
     'purchase-orders': 'Inbound Procurement & Purchase Orders',
     'sales-orders': 'Customer Sales Orders & Order Fulfillment',
@@ -493,6 +561,7 @@ export default function App() {
     warehouses: 'Fulfillment Centers & Warehouses',
     reports: 'Financial & Operational Reports',
     users: 'User Access & RBAC Security Management',
+    architecture: 'High-Level System Architecture Blueprint',
     'java-explorer': 'Java 17+ / JavaFX Project Source & Runner'
   };
 
@@ -533,6 +602,20 @@ export default function App() {
               categories={categories}
               transactions={transactions}
               onNavigateTab={tab => setActiveTab(tab)}
+            />
+          )}
+
+          {activeTab === 'ai-intelligence' && (
+            <AiIntelligenceView
+              products={products}
+              suppliers={suppliers}
+              demandForecasts={demandForecasts}
+              stockRisks={stockRisks}
+              supplierDelays={supplierDelays}
+              procurementRecs={procurementRecs}
+              modelMetadata={modelMetadata}
+              onTrainModels={handleTrainModels}
+              isTraining={isTraining}
             />
           )}
 
@@ -652,6 +735,10 @@ export default function App() {
               onToggleUserStatus={handleToggleUserStatus}
               onUpdateUserRole={handleUpdateUserRole}
             />
+          )}
+
+          {activeTab === 'architecture' && (
+            <ArchitectureDiagram />
           )}
 
           {activeTab === 'java-explorer' && (

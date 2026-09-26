@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   LayoutDashboard,
+  Brain,
   Boxes,
   ClipboardList,
   ShoppingCart,
@@ -13,6 +14,7 @@ import {
   BarChart3,
   Users,
   Code2,
+  Layers,
   LogOut,
   ShieldCheck
 } from 'lucide-react';
@@ -20,6 +22,7 @@ import { User } from '../data/initialData';
 
 export type ActiveTab =
   | 'dashboard'
+  | 'ai-intelligence'
   | 'inventory'
   | 'purchase-orders'
   | 'sales-orders'
@@ -31,6 +34,7 @@ export type ActiveTab =
   | 'warehouses'
   | 'reports'
   | 'users'
+  | 'architecture'
   | 'java-explorer';
 
 interface SidebarProps {
@@ -50,6 +54,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, category: null },
+    { id: 'ai-intelligence', label: 'AI Intelligence', icon: Brain, category: null, isAi: true },
 
     { id: 'inventory', label: 'Inventory Stock', icon: Boxes, category: 'OPERATIONS' },
     { id: 'purchase-orders', label: 'Purchase Orders', icon: ClipboardList, category: 'OPERATIONS' },
@@ -65,6 +70,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { id: 'reports', label: 'Reports & CSV Export', icon: BarChart3, category: 'ANALYTICS' },
 
     { id: 'users', label: 'User Roles & RBAC', icon: Users, category: 'ADMINISTRATION', adminOnly: true },
+    { id: 'architecture', label: 'Architecture Blueprint', icon: Layers, category: 'PROJECT REPO' },
     { id: 'java-explorer', label: 'Java Code & Maven Hub', icon: Code2, category: 'PROJECT REPO' }
   ];
 
@@ -116,6 +122,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
               >
                 <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-slate-400'}`} />
                 <span className="truncate">{item.label}</span>
+                {item.id === 'ai-intelligence' && (
+                  <span className="ml-auto text-[10px] px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-300 border border-blue-400/40 font-bold">
+                    AI
+                  </span>
+                )}
                 {item.id === 'java-explorer' && (
                   <span className="ml-auto text-[10px] px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
                     Java

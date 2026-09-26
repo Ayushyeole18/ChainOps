@@ -565,3 +565,178 @@ export const initialUsers: User[] = [
   { id: 3, username: 'procure', email: 'procure@supplychainx.com', fullName: 'David Sterling', roleId: 3, role: 'Procurement Manager', status: 'ACTIVE', password: 'procure123' },
   { id: 4, username: 'sales', email: 'sales@supplychainx.com', fullName: 'Sarah Chen', roleId: 4, role: 'Sales Manager', status: 'ACTIVE', password: 'sales123' },
 ];
+
+// =====================================================================
+// AI / ML Intelligence Data Models & Seeds
+// =====================================================================
+
+export interface DemandForecast {
+  id: number;
+  productId: number;
+  sku: string;
+  productName: string;
+  categoryName: string;
+  forecastPeriodDays: number;
+  historicalDailyAvg: number;
+  predictedQuantity: number;
+  confidenceLower: number;
+  confidenceUpper: number;
+  trendDirection: 'UP' | 'DOWN' | 'STABLE';
+  trendSlope: number;
+  mae: number;
+  rmse: number;
+  calculatedAt: string;
+}
+
+export interface StockRiskPrediction {
+  id: number;
+  productId: number;
+  sku: string;
+  productName: string;
+  categoryName: string;
+  currentStock: number;
+  reorderLevel: number;
+  dailyVelocity: number;
+  predicted30dDemand: number;
+  daysUntilStockout: number;
+  riskLevel: 'LOW' | 'MEDIUM' | 'HIGH';
+  riskScore: number;
+  recommendedOrderQty: number;
+  evaluatedAt: string;
+}
+
+export interface SupplierDelayPrediction {
+  id: number;
+  supplierId: number;
+  supplierName: string;
+  contactPerson: string;
+  email: string;
+  averageLeadTimeDays: number;
+  lateDeliveryCount: number;
+  totalOrdersEvaluated: number;
+  delayProbability: number;
+  riskCategory: 'LOW' | 'MODERATE' | 'CRITICAL';
+  reliabilityScore: number;
+  evaluatedAt: string;
+}
+
+export interface ProcurementRecommendation {
+  productId: number;
+  sku: string;
+  productName: string;
+  categoryName: string;
+  supplierId: number;
+  supplierName: string;
+  currentStock: number;
+  safetyStock: number;
+  predicted30dDemand: number;
+  dailyVelocity: number;
+  supplierLeadTimeDays: number;
+  supplierDelayRiskPct: number;
+  recommendedOrderQty: number;
+  unitPrice: number;
+  estimatedTotalCost: number;
+  urgency: 'CRITICAL' | 'HIGH' | 'NORMAL';
+}
+
+export interface ModelTrainingMetadata {
+  id: number;
+  modelName: string;
+  modelType: string;
+  algorithm: string;
+  trainingSampleSize: number;
+  mae?: number;
+  rmse?: number;
+  rSquared?: number;
+  accuracyScore?: number;
+  lastTrainedAt: string;
+  status: 'TRAINED' | 'OUTDATED' | 'TRAINING_FAILED';
+  notes: string;
+}
+
+export const initialModelMetadata: ModelTrainingMetadata[] = [
+  {
+    id: 1,
+    modelName: 'DEMAND_FORECAST_OLS',
+    modelType: 'REGRESSION',
+    algorithm: 'Ordinary Least Squares & Weighted Trend Analysis',
+    trainingSampleSize: 142,
+    mae: 4.35,
+    rmse: 5.82,
+    rSquared: 0.892,
+    accuracyScore: 0.912,
+    lastTrainedAt: '2026-09-26 12:30:00',
+    status: 'TRAINED',
+    notes: 'Trained on multi-month sales orders with 7-day and 30-day lookaheads.'
+  },
+  {
+    id: 2,
+    modelName: 'STOCKOUT_RISK_VELOCITY',
+    modelType: 'HEURISTIC_ML',
+    algorithm: 'Dynamic Sales Velocity & Lead-Time Runout Model',
+    trainingSampleSize: 88,
+    mae: 1.20,
+    rmse: 1.85,
+    rSquared: 0.934,
+    accuracyScore: 0.945,
+    lastTrainedAt: '2026-09-26 12:30:00',
+    status: 'TRAINED',
+    notes: 'Evaluates physical available stock against sales velocity and supplier lead-times.'
+  },
+  {
+    id: 3,
+    modelName: 'SUPPLIER_DELAY_PROBABILITY',
+    modelType: 'CLASSIFICATION',
+    algorithm: 'Empirical Lead-Time Variance & Logistic Risk Classifier',
+    trainingSampleSize: 64,
+    accuracyScore: 0.918,
+    lastTrainedAt: '2026-09-26 12:30:00',
+    status: 'TRAINED',
+    notes: 'Classifies supplier purchase order fulfillment into Low, Moderate, and Critical delay risks.'
+  }
+];
+
+export const initialDemandForecasts: DemandForecast[] = [
+  { id: 1, productId: 1, sku: 'SKU-RAW-101', productName: 'Cold-Rolled Carbon Steel Sheet 2mm', categoryName: 'Industrial Raw Materials', forecastPeriodDays: 30, historicalDailyAvg: 2.80, predictedQuantity: 94, confidenceLower: 82, confidenceUpper: 106, trendDirection: 'UP', trendSlope: 0.1250, mae: 3.10, rmse: 4.20, calculatedAt: '2026-09-26 12:30:00' },
+  { id: 2, productId: 2, sku: 'SKU-RAW-102', productName: 'Aircraft Grade Aluminum 6061 Bar', categoryName: 'Industrial Raw Materials', forecastPeriodDays: 30, historicalDailyAvg: 1.50, predictedQuantity: 48, confidenceLower: 41, confidenceUpper: 55, trendDirection: 'STABLE', trendSlope: 0.0120, mae: 2.40, rmse: 3.10, calculatedAt: '2026-09-26 12:30:00' },
+  { id: 3, productId: 3, sku: 'SKU-RAW-103', productName: 'Industrial Polypropylene Pellets (50kg)', categoryName: 'Industrial Raw Materials', forecastPeriodDays: 30, historicalDailyAvg: 1.10, predictedQuantity: 36, confidenceLower: 29, confidenceUpper: 43, trendDirection: 'DOWN', trendSlope: -0.0450, mae: 2.90, rmse: 3.80, calculatedAt: '2026-09-26 12:30:00' },
+  { id: 4, productId: 5, sku: 'SKU-ELEC-201', productName: 'ARM Cortex-M4 Microcontroller 120MHz', categoryName: 'Precision Electronics & Chips', forecastPeriodDays: 30, historicalDailyAvg: 8.40, predictedQuantity: 275, confidenceLower: 245, confidenceUpper: 305, trendDirection: 'UP', trendSlope: 0.3400, mae: 5.40, rmse: 6.90, calculatedAt: '2026-09-26 12:30:00' },
+  { id: 5, productId: 6, sku: 'SKU-ELEC-202', productName: 'Industrial High-Precision LiDAR Sensor', categoryName: 'Precision Electronics & Chips', forecastPeriodDays: 30, historicalDailyAvg: 0.90, predictedQuantity: 31, confidenceLower: 25, confidenceUpper: 37, trendDirection: 'STABLE', trendSlope: 0.0080, mae: 1.80, rmse: 2.30, calculatedAt: '2026-09-26 12:30:00' },
+  { id: 6, productId: 9, sku: 'SKU-HYD-301', productName: 'High-Pressure Hydraulic Axial Piston Pump', categoryName: 'Hydraulics & Fluid Power', forecastPeriodDays: 30, historicalDailyAvg: 1.20, predictedQuantity: 42, confidenceLower: 35, confidenceUpper: 49, trendDirection: 'UP', trendSlope: 0.0820, mae: 2.20, rmse: 3.00, calculatedAt: '2026-09-26 12:30:00' },
+  { id: 7, productId: 13, sku: 'SKU-PKG-401', productName: 'Heavy-Duty Double-Wall Corrugated Carton (50pk)', categoryName: 'Packaging & Crating', forecastPeriodDays: 30, historicalDailyAvg: 6.20, predictedQuantity: 195, confidenceLower: 172, confidenceUpper: 218, trendDirection: 'STABLE', trendSlope: 0.0150, mae: 4.80, rmse: 6.20, calculatedAt: '2026-09-26 12:30:00' },
+  { id: 8, productId: 16, sku: 'SKU-TOOL-501', productName: 'Brushless Industrial Impact Driver 18V', categoryName: 'Power Tools & Assembly Hardware', forecastPeriodDays: 30, historicalDailyAvg: 2.40, predictedQuantity: 78, confidenceLower: 68, confidenceUpper: 88, trendDirection: 'UP', trendSlope: 0.1100, mae: 3.50, rmse: 4.60, calculatedAt: '2026-09-26 12:30:00' },
+  { id: 9, productId: 21, sku: 'SKU-SAFE-602', productName: 'Kevlar Cut Resistant Gauntlet Gloves (12pr)', categoryName: 'Safety & PPE Equipment', forecastPeriodDays: 30, historicalDailyAvg: 1.80, predictedQuantity: 58, confidenceLower: 50, confidenceUpper: 66, trendDirection: 'UP', trendSlope: 0.0750, mae: 2.70, rmse: 3.40, calculatedAt: '2026-09-26 12:30:00' }
+];
+
+export const initialStockRisks: StockRiskPrediction[] = [
+  { id: 1, productId: 5, sku: 'SKU-ELEC-201', productName: 'ARM Cortex-M4 Microcontroller 120MHz', categoryName: 'Precision Electronics & Chips', currentStock: 20, reorderLevel: 50, dailyVelocity: 8.40, predicted30dDemand: 275, daysUntilStockout: 2, riskLevel: 'HIGH', riskScore: 92.5, recommendedOrderQty: 300, evaluatedAt: '2026-09-26 12:30:00' },
+  { id: 2, productId: 16, sku: 'SKU-TOOL-501', productName: 'Brushless Industrial Impact Driver 18V', categoryName: 'Power Tools & Assembly Hardware', currentStock: 15, reorderLevel: 25, dailyVelocity: 2.40, predicted30dDemand: 78, daysUntilStockout: 6, riskLevel: 'HIGH', riskScore: 84.0, recommendedOrderQty: 80, evaluatedAt: '2026-09-26 12:30:00' },
+  { id: 3, productId: 21, sku: 'SKU-SAFE-602', productName: 'Kevlar Cut Resistant Gauntlet Gloves (12pr)', categoryName: 'Safety & PPE Equipment', currentStock: 18, reorderLevel: 25, dailyVelocity: 1.80, predicted30dDemand: 58, daysUntilStockout: 10, riskLevel: 'HIGH', riskScore: 76.5, recommendedOrderQty: 60, evaluatedAt: '2026-09-26 12:30:00' },
+  { id: 4, productId: 9, sku: 'SKU-HYD-301', productName: 'High-Pressure Hydraulic Axial Piston Pump', categoryName: 'Hydraulics & Fluid Power', currentStock: 12, reorderLevel: 15, dailyVelocity: 1.20, predicted30dDemand: 42, daysUntilStockout: 10, riskLevel: 'HIGH', riskScore: 78.0, recommendedOrderQty: 45, evaluatedAt: '2026-09-26 12:30:00' },
+  { id: 5, productId: 3, sku: 'SKU-RAW-103', productName: 'Industrial Polypropylene Pellets (50kg)', categoryName: 'Industrial Raw Materials', currentStock: 40, reorderLevel: 30, dailyVelocity: 1.10, predicted30dDemand: 36, daysUntilStockout: 36, riskLevel: 'MEDIUM', riskScore: 52.0, recommendedOrderQty: 25, evaluatedAt: '2026-09-26 12:30:00' },
+  { id: 6, productId: 6, sku: 'SKU-ELEC-202', productName: 'Industrial High-Precision LiDAR Sensor', categoryName: 'Precision Electronics & Chips', currentStock: 28, reorderLevel: 20, dailyVelocity: 0.90, predicted30dDemand: 31, daysUntilStockout: 31, riskLevel: 'MEDIUM', riskScore: 48.5, recommendedOrderQty: 20, evaluatedAt: '2026-09-26 12:30:00' },
+  { id: 7, productId: 1, sku: 'SKU-RAW-101', productName: 'Cold-Rolled Carbon Steel Sheet 2mm', categoryName: 'Industrial Raw Materials', currentStock: 145, reorderLevel: 50, dailyVelocity: 2.80, predicted30dDemand: 94, daysUntilStockout: 51, riskLevel: 'LOW', riskScore: 18.2, recommendedOrderQty: 0, evaluatedAt: '2026-09-26 12:30:00' },
+  { id: 8, productId: 2, sku: 'SKU-RAW-102', productName: 'Aircraft Grade Aluminum 6061 Bar', categoryName: 'Industrial Raw Materials', currentStock: 85, reorderLevel: 40, dailyVelocity: 1.50, predicted30dDemand: 48, daysUntilStockout: 56, riskLevel: 'LOW', riskScore: 22.0, recommendedOrderQty: 0, evaluatedAt: '2026-09-26 12:30:00' },
+  { id: 9, productId: 13, sku: 'SKU-PKG-401', productName: 'Heavy-Duty Double-Wall Corrugated Carton (50pk)', categoryName: 'Packaging & Crating', currentStock: 310, reorderLevel: 100, dailyVelocity: 6.20, predicted30dDemand: 195, daysUntilStockout: 50, riskLevel: 'LOW', riskScore: 15.0, recommendedOrderQty: 0, evaluatedAt: '2026-09-26 12:30:00' }
+];
+
+export const initialSupplierDelays: SupplierDelayPrediction[] = [
+  { id: 1, supplierId: 1, supplierName: 'Apex Metallurgical Corp', contactPerson: 'Marcus Thorne', email: 'm.thorne@apexmetallurgical.com', averageLeadTimeDays: 6.2, lateDeliveryCount: 1, totalOrdersEvaluated: 14, delayProbability: 7.14, riskCategory: 'LOW', reliabilityScore: 94.5, evaluatedAt: '2026-09-26 12:30:00' },
+  { id: 2, supplierId: 2, supplierName: 'SiliconCore Dynamics GmbH', contactPerson: 'Dr. Helga Weiss', email: 'orders@siliconcore-de.com', averageLeadTimeDays: 12.8, lateDeliveryCount: 5, totalOrdersEvaluated: 16, delayProbability: 31.25, riskCategory: 'CRITICAL', reliabilityScore: 68.0, evaluatedAt: '2026-09-26 12:30:00' },
+  { id: 3, supplierId: 3, supplierName: 'Pacific Rim Precision Ltd', contactPerson: 'Kenji Tanaka', email: 'tanaka@pacrimprecision.jp', averageLeadTimeDays: 14.5, lateDeliveryCount: 4, totalOrdersEvaluated: 15, delayProbability: 26.67, riskCategory: 'MODERATE', reliabilityScore: 74.0, evaluatedAt: '2026-09-26 12:30:00' },
+  { id: 4, supplierId: 4, supplierName: 'Nordic Fluid & Pressure AS', contactPerson: 'Lars Lindqvist', email: 'support@nordicfluid.no', averageLeadTimeDays: 10.2, lateDeliveryCount: 2, totalOrdersEvaluated: 11, delayProbability: 18.18, riskCategory: 'LOW', reliabilityScore: 86.5, evaluatedAt: '2026-09-26 12:30:00' },
+  { id: 5, supplierId: 5, supplierName: 'OmniPack Global Solutions', contactPerson: 'Maria Gonzales', email: 'mgonzales@omnipackglobal.com', averageLeadTimeDays: 4.5, lateDeliveryCount: 0, totalOrdersEvaluated: 12, delayProbability: 0.0, riskCategory: 'LOW', reliabilityScore: 98.0, evaluatedAt: '2026-09-26 12:30:00' },
+  { id: 6, supplierId: 6, supplierName: 'Vulcan Fasteners & Tooling', contactPerson: 'Robert MacIntyre', email: 'rmacintyre@vulcantools.co.uk', averageLeadTimeDays: 8.1, lateDeliveryCount: 2, totalOrdersEvaluated: 9, delayProbability: 22.22, riskCategory: 'MODERATE', reliabilityScore: 79.5, evaluatedAt: '2026-09-26 12:30:00' },
+  { id: 7, supplierId: 7, supplierName: 'Seoul Sensor Technologies', contactPerson: 'Ji-Hoon Park', email: 'jhpark@seoulsensors.kr', averageLeadTimeDays: 13.4, lateDeliveryCount: 4, totalOrdersEvaluated: 13, delayProbability: 30.77, riskCategory: 'CRITICAL', reliabilityScore: 69.5, evaluatedAt: '2026-09-26 12:30:00' },
+  { id: 8, supplierId: 8, supplierName: 'SafeGuard Industrial Gear', contactPerson: "Brenda O'Connor", email: 'brenda@safeguardindustrial.com', averageLeadTimeDays: 5.0, lateDeliveryCount: 1, totalOrdersEvaluated: 10, delayProbability: 10.0, riskCategory: 'LOW', reliabilityScore: 92.0, evaluatedAt: '2026-09-26 12:30:00' }
+];
+
+export const initialProcurementRecommendations: ProcurementRecommendation[] = [
+  { productId: 5, sku: 'SKU-ELEC-201', productName: 'ARM Cortex-M4 Microcontroller 120MHz', categoryName: 'Precision Electronics & Chips', supplierId: 2, supplierName: 'SiliconCore Dynamics GmbH', currentStock: 20, safetyStock: 50, predicted30dDemand: 275, dailyVelocity: 8.4, supplierLeadTimeDays: 12.8, supplierDelayRiskPct: 31.25, recommendedOrderQty: 300, unitPrice: 14.50, estimatedTotalCost: 4350.00, urgency: 'CRITICAL' },
+  { productId: 16, sku: 'SKU-TOOL-501', productName: 'Brushless Industrial Impact Driver 18V', categoryName: 'Power Tools & Assembly Hardware', supplierId: 6, supplierName: 'Vulcan Fasteners & Tooling', currentStock: 15, safetyStock: 25, predicted30dDemand: 78, dailyVelocity: 2.4, supplierLeadTimeDays: 8.1, supplierDelayRiskPct: 22.22, recommendedOrderQty: 80, unitPrice: 265.00, estimatedTotalCost: 21200.00, urgency: 'CRITICAL' },
+  { productId: 9, sku: 'SKU-HYD-301', productName: 'High-Pressure Hydraulic Axial Piston Pump', categoryName: 'Hydraulics & Fluid Power', supplierId: 4, supplierName: 'Nordic Fluid & Pressure AS', currentStock: 12, safetyStock: 15, predicted30dDemand: 42, dailyVelocity: 1.2, supplierLeadTimeDays: 10.2, supplierDelayRiskPct: 18.18, recommendedOrderQty: 45, unitPrice: 580.00, estimatedTotalCost: 26100.00, urgency: 'CRITICAL' },
+  { productId: 21, sku: 'SKU-SAFE-602', productName: 'Kevlar Cut Resistant Gauntlet Gloves (12pr)', categoryName: 'Safety & PPE Equipment', supplierId: 8, supplierName: 'SafeGuard Industrial Gear', currentStock: 18, safetyStock: 25, predicted30dDemand: 58, dailyVelocity: 1.8, supplierLeadTimeDays: 5.0, supplierDelayRiskPct: 10.0, recommendedOrderQty: 60, unitPrice: 125.00, estimatedTotalCost: 7500.00, urgency: 'HIGH' },
+  { productId: 3, sku: 'SKU-RAW-103', productName: 'Industrial Polypropylene Pellets (50kg)', categoryName: 'Industrial Raw Materials', supplierId: 1, supplierName: 'Apex Metallurgical Corp', currentStock: 40, safetyStock: 30, predicted30dDemand: 36, dailyVelocity: 1.1, supplierLeadTimeDays: 6.2, supplierDelayRiskPct: 7.14, recommendedOrderQty: 25, unitPrice: 95.00, estimatedTotalCost: 2375.00, urgency: 'NORMAL' },
+  { productId: 6, sku: 'SKU-ELEC-202', productName: 'Industrial High-Precision LiDAR Sensor', categoryName: 'Precision Electronics & Chips', supplierId: 7, supplierName: 'Seoul Sensor Technologies', currentStock: 28, safetyStock: 20, predicted30dDemand: 31, dailyVelocity: 0.9, supplierLeadTimeDays: 13.4, supplierDelayRiskPct: 30.77, recommendedOrderQty: 20, unitPrice: 420.00, estimatedTotalCost: 8400.00, urgency: 'NORMAL' }
+];
+

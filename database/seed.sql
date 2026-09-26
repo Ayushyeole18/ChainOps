@@ -213,3 +213,53 @@ INSERT INTO stock_transfer_items (transfer_id, product_id, quantity) VALUES
 (2, 21, 25),
 (2, 13, 80),
 (3, 4, 15);
+
+-- ---------------------------------------------------------------------
+-- 16. Insert ML Model Metadata
+-- ---------------------------------------------------------------------
+INSERT INTO ml_model_metadata (model_id, model_name, model_type, algorithm, training_sample_size, mae, rmse, r_squared, accuracy_score, status, notes) VALUES
+(1, 'DEMAND_FORECAST_OLS', 'REGRESSION', 'Ordinary Least Squares & Weighted Trend Analysis', 142, 4.3500, 5.8200, 0.8920, 0.9120, 'TRAINED', 'Trained on multi-month sales orders with 7-day and 30-day lookaheads.'),
+(2, 'STOCKOUT_RISK_VELOCITY', 'HEURISTIC_ML', 'Dynamic Sales Velocity & Lead-Time Runout Model', 88, 1.2000, 1.8500, 0.9340, 0.9450, 'TRAINED', 'Evaluates physical available stock against sales velocity and supplier lead-times.'),
+(3, 'SUPPLIER_DELAY_PROBABILITY', 'CLASSIFICATION', 'Empirical Lead-Time Variance & Logistic Risk Classifier', 64, NULL, NULL, NULL, 0.9180, 'TRAINED', 'Classifies supplier purchase order fulfillment into Low, Moderate, and Critical delay risks.');
+
+-- ---------------------------------------------------------------------
+-- 17. Insert Demand Forecasts
+-- ---------------------------------------------------------------------
+INSERT INTO demand_forecasts (forecast_id, product_id, forecast_period_days, historical_daily_avg, predicted_quantity, confidence_lower, confidence_upper, trend_direction, trend_slope) VALUES
+(1, 1, 30, 2.80, 94, 82, 106, 'UP', 0.1250),
+(2, 2, 30, 1.50, 48, 41, 55, 'STABLE', 0.0120),
+(3, 3, 30, 1.10, 36, 29, 43, 'DOWN', -0.0450),
+(4, 5, 30, 8.40, 275, 245, 305, 'UP', 0.3400),
+(5, 6, 30, 0.90, 31, 25, 37, 'STABLE', 0.0080),
+(6, 9, 30, 1.20, 42, 35, 49, 'UP', 0.0820),
+(7, 13, 30, 6.20, 195, 172, 218, 'STABLE', 0.0150),
+(8, 16, 30, 2.40, 78, 68, 88, 'UP', 0.1100),
+(9, 21, 30, 1.80, 58, 50, 66, 'UP', 0.0750);
+
+-- ---------------------------------------------------------------------
+-- 18. Insert Stock Risk Predictions
+-- ---------------------------------------------------------------------
+INSERT INTO stock_risk_predictions (risk_id, product_id, current_stock, daily_velocity, predicted_30d_demand, days_until_stockout, risk_level, risk_score, recommended_order_qty) VALUES
+(1, 5, 20, 8.40, 275, 2, 'HIGH', 92.50, 300),
+(2, 16, 15, 2.40, 78, 6, 'HIGH', 84.00, 80),
+(3, 21, 18, 1.80, 58, 10, 'HIGH', 76.50, 60),
+(4, 1, 145, 2.80, 94, 51, 'LOW', 18.20, 0),
+(5, 2, 85, 1.50, 48, 56, 'LOW', 22.00, 0),
+(6, 9, 12, 1.20, 42, 10, 'HIGH', 78.00, 45),
+(7, 13, 310, 6.20, 195, 50, 'LOW', 15.00, 0),
+(8, 3, 40, 1.10, 36, 36, 'MEDIUM', 52.00, 25),
+(9, 6, 28, 0.90, 31, 31, 'MEDIUM', 48.50, 20);
+
+-- ---------------------------------------------------------------------
+-- 19. Insert Supplier Delay Predictions
+-- ---------------------------------------------------------------------
+INSERT INTO supplier_delay_predictions (delay_id, supplier_id, average_lead_time_days, late_delivery_count, total_orders_evaluated, delay_probability, risk_category, reliability_score) VALUES
+(1, 1, 6.20, 1, 14, 7.14, 'LOW', 94.50),
+(2, 2, 12.80, 5, 16, 31.25, 'CRITICAL', 68.00),
+(3, 3, 14.50, 4, 15, 26.67, 'MODERATE', 74.00),
+(4, 4, 10.20, 2, 11, 18.18, 'LOW', 86.50),
+(5, 5, 4.50, 0, 12, 0.00, 'LOW', 98.00),
+(6, 6, 8.10, 2, 9, 22.22, 'MODERATE', 79.50),
+(7, 7, 13.40, 4, 13, 30.77, 'CRITICAL', 69.50),
+(8, 8, 5.00, 1, 10, 10.00, 'LOW', 92.00);
+

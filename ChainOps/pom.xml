@@ -62,6 +62,13 @@
             <version>${jbcrypt.version}</version>
         </dependency>
 
+        <!-- Apache Commons Math for AI/ML Regression & Statistical Modeling -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-math3</artifactId>
+            <version>3.6.1</version>
+        </dependency>
+
         <!-- Logging (SLF4J Simple) -->
         <dependency>
             <groupId>org.slf4j</groupId>

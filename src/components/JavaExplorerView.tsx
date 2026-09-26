@@ -18,6 +18,7 @@ import {
   ChevronDown
 } from 'lucide-react';
 import { FileNode, projectFilesTree } from '../data/projectFiles';
+import { ArchitectureDiagram } from './ArchitectureDiagram';
 
 interface JavaExplorerViewProps {
   onDownloadZip: () => void;
@@ -27,7 +28,7 @@ export const JavaExplorerView: React.FC<JavaExplorerViewProps> = ({ onDownloadZi
   const [treeData, setTreeData] = useState<FileNode[]>(projectFilesTree);
   const [selectedFile, setSelectedFile] = useState<FileNode | null>(null);
   const [copied, setCopied] = useState(false);
-  const [activeTab, setActiveTab] = useState<'code' | 'guide' | 'schema'>('code');
+  const [activeTab, setActiveTab] = useState<'code' | 'architecture' | 'guide' | 'schema'>('code');
   const [expandedFolders, setExpandedFolders] = useState<Record<string, boolean>>({
     'database': true,
     'src': true,
@@ -156,7 +157,16 @@ export const JavaExplorerView: React.FC<JavaExplorerViewProps> = ({ onDownloadZi
       </div>
 
       {/* Mode Tabs */}
-      <div className="flex items-center gap-2 border-b border-slate-200 pb-2">
+      <div className="flex flex-wrap items-center gap-2 border-b border-slate-200 pb-2">
+        <button
+          onClick={() => setActiveTab('architecture')}
+          className={`flex items-center gap-2 px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
+            activeTab === 'architecture' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-600 hover:bg-slate-100'
+          }`}
+        >
+          <Layers className="w-3.5 h-3.5" />
+          <span>System Architecture Diagram</span>
+        </button>
         <button
           onClick={() => setActiveTab('code')}
           className={`flex items-center gap-2 px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
@@ -187,6 +197,8 @@ export const JavaExplorerView: React.FC<JavaExplorerViewProps> = ({ onDownloadZi
       </div>
 
       {/* Main Content Area */}
+      {activeTab === 'architecture' && <ArchitectureDiagram />}
+
       {activeTab === 'code' && (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           {/* File Tree Sidebar */}

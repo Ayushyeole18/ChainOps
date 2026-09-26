@@ -25,6 +25,7 @@ public class MainLayoutController {
 
     // Sidebar navigation buttons
     @FXML private Button navDashboard;
+    @FXML private Button navAiIntelligence;
     @FXML private Button navInventory;
     @FXML private Button navPurchaseOrders;
     @FXML private Button navSalesOrders;
@@ -59,6 +60,7 @@ public class MainLayoutController {
 
         // Register buttons
         navButtons.put("Dashboard", navDashboard);
+        navButtons.put("AI / ML Intelligence", navAiIntelligence);
         navButtons.put("Inventory", navInventory);
         navButtons.put("Purchase Orders", navPurchaseOrders);
         navButtons.put("Sales Orders", navSalesOrders);
@@ -94,6 +96,7 @@ public class MainLayoutController {
 
     // Navigation actions
     @FXML private void showDashboard() { NavigationManager.switchView("/fxml/Dashboard.fxml", "Dashboard"); }
+    @FXML private void showAiIntelligence() { NavigationManager.switchView("/fxml/AiIntelligence.fxml", "AI / ML Intelligence"); }
     @FXML private void showInventory() { NavigationManager.switchView("/fxml/Inventory.fxml", "Inventory"); }
     @FXML private void showPurchaseOrders() { NavigationManager.switchView("/fxml/PurchaseOrders.fxml", "Purchase Orders"); }
     @FXML private void showSalesOrders() { NavigationManager.switchView("/fxml/SalesOrders.fxml", "Sales Orders"); }

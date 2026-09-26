@@ -24,6 +24,7 @@
             <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
                 <VBox spacing="4" style="-fx-background-color: transparent;">
                     <Button fx:id="navDashboard" text="📊  Dashboard" onAction="#showDashboard" maxWidth="Infinity" styleClass="nav-button"/>
+                    <Button fx:id="navAiIntelligence" text="🧠  AI / ML Intelligence" onAction="#showAiIntelligence" maxWidth="Infinity" styleClass="nav-button"/>
 
                     <Label text="OPERATIONS" styleClass="sidebar-section-header"/>
                     <Button fx:id="navInventory" text="📦  Inventory" onAction="#showInventory" maxWidth="Infinity" styleClass="nav-button"/>
